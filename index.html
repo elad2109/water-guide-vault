@@ -1,0 +1,2447 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+  <title>Israel Home Water &amp; Scale Engineering Guide | Community Stress-Test Vault</title>
+  <!-- WATER_GUIDE_SPEECH_VOICE_GUARD_START -->
+  <script>
+  (function() {
+    if (typeof window === 'undefined' || !('speechSynthesis' in window)) return;
+    var NON_STANDARD_VOICE_REGEX_ = /albert|bad news|bahh|bells|boing|bubbles|cellos|deranged|good news|hysterical|junior|organ|pipe|princess|ralph|trinoids|vicki|whisper|zarvox|fred|espeak|novelty|rocko|shelley|grandma|grandpa|eddy|flo|reed|sandy|kathy|eloquence|jester|superstar|wobble/i;
+    function pickBestStandardVoice(voices, langPrefix) {
+      var targetPrefix = (langPrefix || 'en').toLowerCase().slice(0, 2);
+      var best = null;
+      var bestScore = -999;
+      for (var i = 0; i < (voices || []).length; i++) {
+        var v = voices[i];
+        var name = String(v.name || '');
+        var lang = String(v.lang || '');
+        if (NON_STANDARD_VOICE_REGEX_.test(name)) continue;
+        if (lang.toLowerCase().slice(0, 2) !== targetPrefix) continue;
+        var score = 10;
+        if (/Google US English/i.test(name)) score += 100;
+        else if (/Google UK English Female/i.test(name)) score += 90;
+        else if (/Google UK English Male/i.test(name)) score += 85;
+        if (/natural|neural|online|premium|enhanced|siri/i.test(name)) score += 80;
+        if (/samantha|ava|allison|alex|victoria|karen|daniel|serena|zira|david|jenny|aria|guy|moira/i.test(name)) score += 70;
+        if (/en[-_]US/i.test(lang)) score += 25;
+        else if (/en[-_](GB|IE|AU|CA)/i.test(lang)) score += 20;
+        if (v.default) score += 40;
+        if (score > bestScore) {
+          bestScore = score;
+          best = v;
+        }
+      }
+      return best;
+    }
+    window.pickStandardSpeechVoice_ = function() {
+      var voices = window.speechSynthesis.getVoices() || [];
+      return pickBestStandardVoice(voices, document.documentElement.lang || 'en');
+    };
+    var origSpeak = window.speechSynthesis.speak.bind(window.speechSynthesis);
+    window.speechSynthesis.speak = function(utterance) {
+      try {
+        if (utterance) {
+          var voices = window.speechSynthesis.getVoices() || [];
+          var currentName = utterance.voice ? String(utterance.voice.name || '') : '';
+          if (!utterance.voice || NON_STANDARD_VOICE_REGEX_.test(currentName)) {
+            var chosen = pickBestStandardVoice(voices, utterance.lang || 'en');
+            if (chosen) utterance.voice = chosen;
+          }
+          window._activeUtterance = utterance;
+        }
+      } catch (err) {}
+      return origSpeak(utterance);
+    };
+  })();
+  </script>
+  <!-- WATER_GUIDE_SPEECH_VOICE_GUARD_END -->
+  <style>
+    :root, [data-theme="light"] {
+      --bg: #f8fafc;
+      --surface: #ffffff;
+      --card: #ffffff;
+      --card-alt: #f1f5f9;
+      --text: #0f172a;
+      --muted: #475569;
+      --border: #cbd5e1;
+      --primary: #1d4ed8;
+      --primary-solid: #1d4ed8;
+      --primary-bg: #e8f0fe;
+      --success-text: #065f46;
+      --success-bg: #dcfce7;
+      --success-border: rgba(6, 95, 70, 0.28);
+      --amber-text: #92400e;
+      --amber-bg: #fef3c7;
+      --amber-border: rgba(146, 64, 14, 0.28);
+      --danger-text: #991b1b;
+      --danger-bg: #fee2e2;
+      --danger-border: rgba(153, 27, 27, 0.28);
+      --purple-text: #6b21a8;
+      --purple-bg: #f3e8ff;
+      --purple-border: rgba(107, 33, 168, 0.26);
+      --shadow: 0 2px 10px rgba(15, 23, 42, 0.06);
+    }
+    [data-theme="dark"] {
+      --bg: #0f172a;
+      --surface: #1e293b;
+      --card: #1e293b;
+      --card-alt: #0f172a;
+      --text: #f8fafc;
+      --muted: #cbd5e1;
+      --border: #334155;
+      --primary: #60a5fa;
+      --primary-solid: #2563eb;
+      --primary-bg: rgba(37, 99, 235, 0.22);
+      --success-text: #6ee7b7;
+      --success-bg: rgba(6, 95, 70, 0.35);
+      --success-border: rgba(110, 231, 183, 0.32);
+      --amber-text: #fcd34d;
+      --amber-bg: rgba(146, 64, 14, 0.35);
+      --amber-border: rgba(252, 211, 77, 0.32);
+      --danger-text: #fca5a5;
+      --danger-bg: rgba(153, 27, 27, 0.35);
+      --danger-border: rgba(252, 165, 165, 0.32);
+      --purple-text: #d8b4fe;
+      --purple-bg: rgba(107, 33, 168, 0.35);
+      --purple-border: rgba(216, 180, 254, 0.32);
+      --shadow: 0 6px 18px rgba(0, 0, 0, 0.38);
+    }
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: 'Google Sans', Roboto, -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.55;
+    }
+    a {
+      color: var(--primary);
+      text-decoration: underline;
+    }
+    button, a, input, select, textarea, summary {
+      font-family: inherit;
+    }
+    button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible, summary:focus-visible {
+      outline: 3px solid var(--primary);
+      outline-offset: 2px;
+    }
+    .app-header {
+      position: sticky;
+      inset-block-start: 0;
+      z-index: 60;
+      background: var(--surface);
+      border-block-end: 1px solid var(--border);
+      padding-block: 10px;
+      padding-inline: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .header-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .header-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin: 0;
+    }
+    .header-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .seg-group {
+      display: inline-flex;
+      background: var(--card-alt);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 2px;
+    }
+    .seg-btn {
+      position: relative;
+      border: none;
+      background: transparent;
+      color: var(--text);
+      padding-block: 6px;
+      padding-inline: 11px;
+      min-height: 38px;
+      border-radius: 6px;
+      font-size: 0.83rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .seg-btn::after, .btn-action::after, .chip-btn::after, .card-listen-btn::after {
+      content: '';
+      position: absolute;
+      inset-block-start: 50%;
+      inset-inline-start: 50%;
+      transform: translate(-50%, -50%);
+      min-width: 44px;
+      min-height: 44px;
+    }
+    .seg-btn[aria-pressed="true"] {
+      background: var(--primary-solid);
+      color: #ffffff;
+    }
+    .btn-action {
+      position: relative;
+      border: 1px solid var(--border);
+      background: var(--card);
+      color: var(--text);
+      padding-block: 6px;
+      padding-inline: 12px;
+      min-height: 38px;
+      border-radius: 8px;
+      font-size: 0.84rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+    }
+    .btn-action.primary {
+      background: var(--primary-solid);
+      color: #ffffff;
+      border-color: var(--primary-solid);
+    }
+    .btn-action[aria-pressed="true"] {
+      background: var(--primary-solid);
+      color: #ffffff;
+      border-color: var(--primary-solid);
+    }
+    .container {
+      max-width: 1140px;
+      margin-inline: auto;
+      padding-block: 20px 48px;
+      padding-inline: 20px;
+    }
+    .caption-bar {
+      position: sticky;
+      inset-block-start: 62px;
+      z-index: 55;
+      background: var(--surface);
+      border: 2px solid var(--primary);
+      border-radius: 12px;
+      padding-block: 10px;
+      padding-inline: 16px;
+      margin-block-end: 18px;
+      box-shadow: var(--shadow);
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .caption-bar.visible {
+      display: flex;
+    }
+    .caption-text-wrap {
+      flex: 1;
+      min-width: 240px;
+    }
+    .caption-step-badge {
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: var(--primary);
+      display: block;
+      margin-block-end: 2px;
+    }
+    .caption-live-sentence {
+      font-size: 0.93rem;
+      font-weight: 500;
+      margin: 0;
+    }
+    .box-speaking {
+      outline: 3px solid var(--primary);
+      outline-offset: 3px;
+      transition: outline 0.2s ease;
+    }
+    .hero-card, .panel-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding-block: 20px;
+      padding-inline: 22px;
+      box-shadow: var(--shadow);
+      margin-block-end: 20px;
+    }
+    .card-top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-block-end: 10px;
+    }
+    .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding-block: 4px;
+      padding-inline: 10px;
+      border-radius: 999px;
+      font-size: 0.77rem;
+      font-weight: 600;
+    }
+    .badge-green { color: var(--success-text); background: var(--success-bg); border: 1px solid var(--success-border); }
+    .badge-amber { color: var(--amber-text); background: var(--amber-bg); border: 1px solid var(--amber-border); }
+    .badge-danger { color: var(--danger-text); background: var(--danger-bg); border: 1px solid var(--danger-border); }
+    .badge-purple { color: var(--purple-text); background: var(--purple-bg); border: 1px solid var(--purple-border); }
+    .badge-blue { color: var(--primary); background: var(--primary-bg); border: 1px solid var(--border); }
+    .card-listen-btn {
+      position: relative;
+      border: 1px solid var(--border);
+      background: var(--card-alt);
+      color: var(--text);
+      border-radius: 999px;
+      padding-block: 4px;
+      padding-inline: 10px;
+      font-size: 0.76rem;
+      font-weight: 600;
+      cursor: pointer;
+      min-height: 32px;
+    }
+    .hero-h1 {
+      font-size: 1.5rem;
+      margin-block: 0 8px;
+    }
+    .hero-sub {
+      color: var(--muted);
+      margin-block: 0 14px;
+      font-size: 0.95rem;
+    }
+    .concierge-box {
+      background: var(--card-alt);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+      margin-block-start: 12px;
+    }
+    .chips-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-block-end: 12px;
+    }
+    .chip-btn {
+      position: relative;
+      border: 1px solid var(--border);
+      background: var(--card);
+      color: var(--text);
+      padding-block: 6px;
+      padding-inline: 12px;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      min-height: 36px;
+    }
+    .chip-btn:hover {
+      border-color: var(--primary);
+    }
+    .concierge-input-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .search-input {
+      flex: 1;
+      min-width: 220px;
+      padding-block: 9px;
+      padding-inline: 14px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--card);
+      color: var(--text);
+      font-size: 0.9rem;
+    }
+    .concierge-reply {
+      margin-block-start: 12px;
+      padding: 14px;
+      border-radius: 10px;
+      background: var(--card);
+      border-inline-start: 4px solid var(--primary);
+      font-size: 0.9rem;
+    }
+    .section-title {
+      font-size: 1.18rem;
+      font-weight: 700;
+      margin-block: 24px 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .compare-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 14px;
+      margin-block-end: 20px;
+    }
+    .mockup-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .mockup-card h3 {
+      margin: 0;
+      font-size: 1rem;
+    }
+    .mockup-split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-block-start: 4px;
+    }
+    .mockup-pane {
+      border-radius: 8px;
+      padding: 10px;
+      font-size: 0.82rem;
+    }
+    .mockup-pane.bad {
+      background: var(--danger-bg);
+      border: 1px solid var(--danger-border);
+      color: var(--text);
+    }
+    .mockup-pane.good {
+      background: var(--success-bg);
+      border: 1px solid var(--success-border);
+      color: var(--text);
+    }
+    .calc-controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-block-end: 16px;
+      padding-block-end: 14px;
+      border-block-end: 1px solid var(--border);
+    }
+    .control-block {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .control-label {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--muted);
+    }
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 14px;
+    }
+    .cap-card {
+      background: var(--card-alt);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .cap-amount {
+      font-size: 1.32rem;
+      font-weight: 800;
+      color: var(--primary);
+    }
+    .cap-title {
+      font-size: 0.94rem;
+      font-weight: 700;
+      margin: 0;
+    }
+    .cap-desc {
+      font-size: 0.84rem;
+      color: var(--muted);
+      margin: 0;
+    }
+    .table-wrap {
+      overflow-x: auto;
+    }
+    .audit-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.86rem;
+    }
+    .audit-table th, .audit-table td {
+      text-align: start;
+      padding-block: 10px;
+      padding-inline: 12px;
+      border-block-end: 1px solid var(--border);
+      vertical-align: top;
+    }
+    .audit-table th {
+      background: var(--card-alt);
+      font-weight: 700;
+    }
+    .qa-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 14px;
+    }
+    .qa-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+      box-shadow: var(--shadow);
+    }
+    .qa-card h3 {
+      margin-block: 6px;
+      font-size: 0.95rem;
+    }
+    .qa-card p {
+      margin: 0;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+    .prompt-copy-area {
+      width: 100%;
+      min-height: 74px;
+      margin-block-top: 8px;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--card-alt);
+      color: var(--text);
+      font-size: 0.82rem;
+      resize: vertical;
+    }
+    .footer-bar {
+      margin-block-start: 32px;
+      padding-block: 16px;
+      border-block-start: 1px solid var(--border);
+      font-size: 0.82rem;
+      color: var(--muted);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .focus-stepper-bar {
+      background: var(--surface);
+      border: 1px solid var(--primary);
+      border-radius: var(--radius);
+      padding: 12px 16px;
+      margin-block-end: 16px;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .focus-stepper-top {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .focus-pills-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      align-items: center;
+    }
+    .step-pill-btn {
+      position: relative;
+      min-height: 38px;
+      padding: 6px 11px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--card-alt);
+      color: var(--text);
+      font-family: inherit;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .step-pill-btn::after {
+      content: '';
+      position: absolute;
+      inset-block-start: 50%;
+      inset-inline-start: 50%;
+      transform: translate(-50%, -50%);
+      min-width: 44px;
+      min-height: 44px;
+    }
+    .step-pill-btn:hover {
+      border-color: var(--primary);
+    }
+    .step-pill-btn[aria-current="step"] {
+      background: var(--primary-solid);
+      color: #ffffff;
+      border-color: var(--primary-solid);
+    }
+    .focus-bottom-nav {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px 16px;
+      margin-block-top: 14px;
+    }
+    body[data-single-focus="true"] [data-step-title]:not(.step-active) {
+      display: none !important;
+    }
+    body[data-single-focus="true"] .section-title:not(.step-active-title) {
+      display: none !important;
+    }
+    .quick-verdict-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(235px, 1fr));
+      gap: 10px;
+      margin-block-end: 16px;
+    }
+    .quick-verdict-card {
+      background: var(--card-alt);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px 14px;
+      font-size: 0.82rem;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+    .quick-verdict-card.buy {
+      border-inline-start: 4px solid var(--success-text);
+    }
+    .quick-verdict-card.avoid {
+      border-inline-start: 4px solid var(--danger-text);
+    }
+    .quick-verdict-jump {
+      position: relative;
+      margin-block-start: auto;
+      padding-block: 6px;
+      min-height: 44px;
+      color: var(--primary);
+      font-weight: 700;
+      font-size: 0.78rem;
+      background: none;
+      border: none;
+      padding-inline: 0;
+      cursor: pointer;
+      text-align: start;
+      font-family: inherit;
+      text-decoration: underline;
+    }
+    #communityFormModal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 9500;
+      background: rgba(15, 23, 42, 0.76);
+      backdrop-filter: blur(4px);
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+    #communityFormModal.open {
+      display: flex;
+    }
+    .comm-modal-dialog {
+      background: var(--surface);
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      width: 100%;
+      max-width: 680px;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 20px 22px;
+      box-shadow: var(--shadow);
+    }
+    .comm-modal-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      border-block-end: 1px solid var(--border);
+      padding-block-end: 12px;
+      margin-block-end: 14px;
+    }
+    .comm-close-btn {
+      min-width: 44px;
+      min-height: 44px;
+      padding-block: 6px;
+      padding-inline: 12px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: var(--card-alt);
+      color: var(--text);
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .comm-field-group {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      margin-block-end: 12px;
+    }
+    .comm-label {
+      font-size: 0.83rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .comm-input, .comm-select, .comm-textarea {
+      width: 100%;
+      padding-block: 10px;
+      padding-inline: 12px;
+      min-height: 44px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: var(--card-alt);
+      color: var(--text);
+      font-size: 0.88rem;
+    }
+    .comm-textarea {
+      min-height: 92px;
+      resize: vertical;
+    }
+    .comm-iframe-wrap {
+      display: none;
+      margin-block-top: 12px;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: #ffffff;
+    }
+    .comm-iframe-wrap.visible {
+      display: block;
+    }
+    @media print {
+      :root, [data-theme="dark"], [data-theme="light"] {
+        --bg: #ffffff !important;
+        --surface: #ffffff !important;
+        --card: #ffffff !important;
+        --card-alt: #f8fafc !important;
+        --text: #0f172a !important;
+        --muted: #334155 !important;
+        --border: #cbd5e1 !important;
+        --primary: #1d4ed8 !important;
+        --shadow: none !important;
+      }
+      body {
+        background: #ffffff !important;
+        color: #0f172a !important;
+        font-size: 10.5pt !important;
+      }
+      .app-header {
+        position: static !important;
+        border-block-end: 2px solid #cbd5e1 !important;
+      }
+      .header-controls, .card-listen-btn, .caption-bar, #vaultStealthTelemetryModal, #communityFormModal, .focus-stepper-bar, .focus-bottom-nav {
+        display: none !important;
+      }
+      .hero-card, .panel-card, .mockup-card, .qa-card, .cap-card, tr {
+        break-inside: avoid !important;
+        page-break-inside: avoid !important;
+        box-shadow: none !important;
+      }
+      .qa-card,
+      body[data-single-focus="true"] [data-step-title],
+      body[data-single-focus="true"] [data-step-title]:not(.step-active),
+      body[data-single-focus="true"] .section-title,
+      body[data-single-focus="true"] .section-title:not(.step-active-title) {
+        display: block !important;
+      }
+      body[data-single-focus="true"] #stepBox2,
+      body[data-single-focus="true"] #stepBox2:not(.step-active) {
+        display: grid !important;
+      }
+    }
+  </style>
+<!-- ELADB_AUTO_DARK_SURFACES_START -->
+<style>
+  :root[data-theme="dark"] .comm-iframe-wrap {
+    background: #111827 !important; color: #f8fafc !important; border-color: #334155 !important;
+  }
+  :root[data-theme="dark"] [style*="color: #137333"],
+  :root[data-theme="dark"] [style*="color:#137333"],
+  :root[data-theme="dark"] [style*="color: #065f46"] {
+    color: #86efac !important;
+  }
+  :root[data-theme="dark"] [style*="color: #6a1b9a"],
+  :root[data-theme="dark"] [style*="color:#6a1b9a"],
+  :root[data-theme="dark"] [style*="color: #6b21a8"] {
+    color: #d8b4fe !important;
+  }
+  :root[data-theme="dark"] [style*="color: #795548"],
+  :root[data-theme="dark"] [style*="color: #92400e"] {
+    color: #fcd34d !important;
+  }
+</style>
+<!-- ELADB_AUTO_DARK_SURFACES_END -->
+</head>
+<body data-single-focus="true">
+
+  <header class="app-header">
+    <div class="header-brand">
+      <!-- ELADB_GOLINK_BADGE_START -->
+      <a href="http://go/il-water-guide" data-golink-badge="go/il-water-guide" class="btn-action" title="Shortlink: go/il-water-guide">🔗 go/il-water-guide</a>
+      <!-- ELADB_GOLINK_BADGE_END -->
+      <h1 class="header-title" data-en="💧 Israel Home Water &amp; Scale Engineering Guide" data-he="💧 מדריך הנדסי למערכות מים ואבנית בדירה בישראל">💧 Israel Home Water &amp; Scale Engineering Guide</h1>
+    </div>
+    <div class="header-controls">
+      <button type="button" id="openCommFormHeaderBtn" class="btn-action" aria-haspopup="dialog" onclick="openCommunityFormModal()" data-en="📝 Add Question / Tip" data-he="📝 הוספת שאלה / ניסיון מהשטח">📝 Add Question / Tip</button>
+      <a id="pdfDownloadBtn" href="water_scale_guide_en.pdf" download="Israel_Home_Water_Scale_Guide_EN.pdf" class="btn-action primary" data-en="📄 Download PDF (For Home)" data-he="📄 הורדת PDF (ללימוד בבית)">📄 Download PDF (For Home)</a>
+      <div class="seg-group" role="group" aria-label="Language switcher">
+        <button type="button" id="langBtnEn" class="seg-btn" aria-pressed="true" onclick="setLanguage('en')">🇬🇧 English</button>
+        <button type="button" id="langBtnHe" class="seg-btn" aria-pressed="false" onclick="setLanguage('he')">🇮🇱 עברית</button>
+      </div>
+      <div class="seg-group" role="group" aria-label="Theme switcher">
+        <button type="button" id="themeBtnLight" class="seg-btn" aria-pressed="false" onclick="setTheme('light')">☀️ Day</button>
+        <button type="button" id="themeBtnDark" class="seg-btn" aria-pressed="true" onclick="setTheme('dark')">🌙 Night</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- CALM STEP-BY-STEP FOCUS & AUDIO GUIDE BAR -->
+    <nav id="focusStepperBar" class="focus-stepper-bar" aria-label="Step-by-step section navigation and audio guide">
+      <div class="focus-stepper-top">
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+          <div class="seg-group" role="group" aria-label="Audio Guide Persona">
+            <button type="button" id="btnCandid" class="seg-btn" aria-pressed="false" onclick="startFullTour('candid')" data-en="🎧 Candid Audio Guide (~1m 40s)" data-he="🎧 מדריך קולי בגובה העיניים (~1:40 דק׳)">🎧 Candid Audio Guide (~1m 40s)</button>
+            <button type="button" id="btnExec" class="seg-btn" aria-pressed="false" onclick="startFullTour('exec')" data-en="🎯 Quick Pitch (~1m 15s)" data-he="🎯 תקציר קולי מהיר (~1:15 דק׳)">🎯 Quick Pitch (~1m 15s)</button>
+          </div>
+          <button type="button" id="btnCcToggle" class="btn-action" aria-pressed="false" onclick="toggleCaptions()" data-en="💬 CC: OFF" data-he="💬 כתוביות: כבוי">💬 CC: OFF</button>
+          <span id="focusStepCounter" style="font-size:0.82rem;font-weight:700;color:var(--muted);" data-en="Step 1 of 7 • Step-by-Step Focus Mode" data-he="שלב 1 מתוך 7 • מצב מיקוד שלב-אחר-שלב">Step 1 of 7 • Step-by-Step Focus Mode</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+          <button type="button" class="btn-action" onclick="stepView(-1)" data-en="◀ Prev" data-he="◀ הקודם">◀ Prev</button>
+          <button type="button" class="btn-action" onclick="stepView(1)" data-en="Next ▶" data-he="הבא ▶">Next ▶</button>
+          <button type="button" id="btnFocusModeToggle" class="btn-action" aria-pressed="false" onclick="toggleFocusMode()" data-en="👁 Show All 7 Sections on 1 Page" data-he="👁 הצג את כל 7 החלקים בעמוד אחד">👁 Show All 7 Sections on 1 Page</button>
+        </div>
+      </div>
+      <div class="focus-pills-row" role="tablist" aria-label="Guide Sections">
+        <button type="button" class="step-pill-btn" data-pill-idx="0" aria-current="step" onclick="setActiveStep(0, true)" data-en="1. Bottom Line &amp; What to Buy" data-he="1. שורה תחתונה ומה לקנות">1. Bottom Line &amp; What to Buy</button>
+        <button type="button" class="step-pill-btn" data-pill-idx="1" onclick="setActiveStep(1, true)" data-en="2. Physics vs. 3 Myths" data-he="2. פיזיקה מול 3 אשליות">2. Physics vs. 3 Myths</button>
+        <button type="button" class="step-pill-btn" data-pill-idx="2" onclick="setActiveStep(2, true)" data-en="3. 3-Year Cost Calculator" data-he="3. מחשבון עלות-תועלת">3. 3-Year Cost Calculator</button>
+        <button type="button" class="step-pill-btn" data-pill-idx="3" onclick="setActiveStep(3, true)" data-en="4. Brand Audit &amp; Red Flags" data-he="4. ביקורת חברות ומה נפסל">4. Brand Audit &amp; Red Flags</button>
+        <button type="button" class="step-pill-btn" data-pill-idx="4" onclick="setActiveStep(4, true)" data-en="5. 5 Thread Myths &amp; Hive Mind" data-he="5. 5 מיתוסים נפוצים ושגיאות צרכניות">5. 5 Thread Myths &amp; Hive Mind</button>
+        <button type="button" class="step-pill-btn" data-pill-idx="5" onclick="setActiveStep(5, true)" data-en="6. Shopping Links &amp; Coupons" data-he="6. טבלת קנייה, מחירים וקופונים">6. Shopping Links &amp; Coupons</button>
+        <button type="button" class="step-pill-btn" data-pill-idx="6" onclick="setActiveStep(6, true)" data-en="7. Sept 2026 Water Incident" data-he="7. אירוע השבתת ההתפלה">7. Sept 2026 Water Incident</button>
+      </div>
+    </nav>
+
+    <aside id="captionBar" class="caption-bar" aria-live="polite" aria-atomic="true">
+      <div class="caption-text-wrap">
+        <span id="captionStepBadge" class="caption-step-badge">Step 1 of 7 • Audio Walkthrough</span>
+        <p id="captionSentence" class="caption-live-sentence" data-en="Click Play 90s Audio Guide above to start the hands-free walkthrough." data-he="לחצו על המדריך הקולי למעלה כדי להתחיל סיור שמע מודרך שעובר בין השלבים.">Click Play 90s Audio Guide above to start the hands-free walkthrough.</p>
+      </div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;">
+        <button type="button" class="btn-action" onclick="stepAudio(-1)" data-en="◀ Prev" data-he="◀ הקודם">◀ Prev</button>
+        <button type="button" class="btn-action" onclick="stepAudio(1)" data-en="Next ▶" data-he="הבא ▶">Next ▶</button>
+        <button type="button" class="btn-action" onclick="stopAudio()" data-en="⏹ Stop" data-he="⏹ עצור">⏹ Stop</button>
+      </div>
+    </aside>
+
+    <!-- STEP 1: HERO & ASK AI FIRST CONCIERGE -->
+    <section class="hero-card step-active" id="stepBox1" data-step-title="1. Core Takeaway &amp; AI Concierge"
+      data-step-candid-en="Welcome! If you live in Ramat Gan or Tel Aviv, plumbers will promise you one magic filter on your main pipe that protects your boiler, makes tap water healthier, and stops white spots on your shower glass. Physically, two of those three claims are false. Let us break down why, and how to actually solve each one."
+      data-step-exec-en="Bottom line up front: no legal apartment main-line filter in Israel removes dissolved calcium, so none of them prevent shower glass spots or purify drinking water. The optimal engineering architecture splits boiler protection, hydrophobic shower glass coating, and kitchen carbon filtration."
+      data-step-candid-he="ברוכים הבאים. אם אתם גרים ברמת גן או בתל אביב, אינסטלטורים יבטיחו לכם סנן קסם אחד על השעון הראשי שישמור על הדוד, יהפוך את המים לבריאים יותר וימנע כתמים על המקלחון. פיזיקלית, שתיים משלוש ההבטחות האלו פשוט לא נכונות. בואו נפרק למה, ואיך פותרים כל בעיה בנפרד."
+      data-step-exec-he="בשורה התחתונה: אף מסנן דירתי חוקי בישראל לא מוציא סידן מהמים, ולכן הוא לא מונע כתמים על המקלחון ולא מטהר מי שתייה. הארכיטקטורה הנכונה מפרידה בין הגנה על הדוד, ציפוי ננו לזכוכית המקלחון, וסינון פחם פעיל במטבח.">
+      <div class="card-top-bar">
+        <div class="badge-row">
+          <span class="badge badge-green" data-en="✅ Verified Against Israeli Standard 1505 &amp; NSF/ANSI 42/61/372" data-he="✅ מאומת מול תו תקן ישראלי 1505 ותקני NSF/ANSI 42/61/372">✅ Verified Against Israeli Standard 1505 &amp; NSF/ANSI 42/61/372</span>
+          <span class="badge badge-purple" data-en="🔬 Fact-Checking Vendor Claims &amp; Thread Misconceptions via Physics &amp; Lab Standards" data-he="🔬 ביקורת מדעית על הבטחות שיווקיות ועל מיתוסים ואי-הבנות מתוך שרשורים פנימיים">🔬 Fact-Checking Vendor Claims &amp; Thread Misconceptions via Physics &amp; Lab Standards</span>
+          <!-- AUTO_SYNC_STATUS_START -->
+          <span class="badge badge-blue" id="autoSyncBadge" data-en="🔄 Living Knowledge Vault • Verified: Oct 23, 2026" data-he="🔄 מאגר ידע מתעדכן • אומת לאחרונה: 23.10.2026">🔄 Living Knowledge Vault • Verified: Oct 23, 2026</span>
+          <!-- AUTO_SYNC_STATUS_END -->
+        </div>
+        <button type="button" class="card-listen-btn" onclick="playSingleBox(0)" data-en="🔊 Listen (~13s)" data-he="🔊 האזנה (~13 שנ׳)">🔊 Listen (~13s)</button>
+      </div>
+
+      <h2 class="hero-h1" data-en="Why One Main-Pipe Filter Cannot Solve Boilers, Drinking Health &amp; Shower Glass Together" data-he="למה מסנן דירתי אחד לא יכול לפתור במקביל דוד שמש, בריאות מי שתייה וניקיון מקלחון">Why One Main-Pipe Filter Cannot Solve Boilers, Drinking Health &amp; Shower Glass Together</h2>
+      <p class="hero-sub" data-en="Israeli regulations ban salt-brine water softeners on apartment main lines. Every legal system leaves calcium and magnesium in the water: great for human health and boiler coils when crystallized properly, but 100% of those minerals still stay on your shower glass when droplets evaporate." data-he="תקנות המים בישראל אוסרות הזרמת תמלחת ממרככי מלח לביוב הבניין. לכן כל מערכת חוקית משאירה את הסידן והמגנזיום במים: זה מצוין לבריאות ולדוד כשמונעים התגבשות, אבל כשטיפה מתאדה על זכוכית המקלחון כל המינרלים נשארים עליה ככתם לבן.">Israeli regulations ban salt-brine water softeners on apartment main lines. Every legal system leaves calcium and magnesium in the water: great for human health and boiler coils when crystallized properly, but 100% of those minerals still stay on your shower glass when droplets evaporate.</p>
+
+      <!-- EXECUTIVE TL;DR: WHAT TO BUY + WHERE IN THE APARTMENT + COST-BENEFIT + WHAT IS DISQUALIFIED -->
+      <div class="quick-verdict-grid" aria-label="Executive Summary: What to Buy vs. What to Avoid">
+        <div class="quick-verdict-card buy">
+          <span class="badge badge-green" data-en="✅ Buy #1 • 📍 [1] Main Water Meter Cabinet" data-he="✅ מומלץ #1 • 📍 [1] ארון שעון המים הראשי">✅ Buy #1 • 📍 [1] Main Water Meter Cabinet</span>
+          <strong data-en="IPS KalyxX 3/4&quot; + Amiad 100μm Mesh" data-he="קליקס (IPS KalyxX) + סנן רשת נירוסטה עמיעד">IPS KalyxX 3/4" + Amiad 100μm Mesh</strong>
+          <span style="color:var(--muted);" data-en="• Installed in hallway meter cabinet. • 76%–85% less scale on boiler coils &amp; 95%+ rust blocking, 0 chemicals. • Cost-Benefit: ~₪1,130–₪1,530 once for 10 years, ₪0 refills (~₪18/mo)." data-he="• מותקן בארון השעון בחדר המדרגות. • 76%–85% הפחתת אבנית בדוד ומעל 95% עצירת חלודה, 0 כימיקלים במים. • עלות-תועלת: 1,130–1,530 ש״ח ל-10 שנים, 0 ש״ח סננים להחלפה (~18 ש״ח לחודש).">• Installed in hallway meter cabinet. • 76%–85% less scale on boiler coils &amp; 95%+ rust blocking, 0 chemicals. • Cost-Benefit: ~₪1,130–₪1,530 once for 10 years, ₪0 refills (~₪18/mo).</span>
+          <button type="button" class="quick-verdict-jump" onclick="setActiveStep(5, true)" data-en="🛒 Jump to Links &amp; Coupons (Section 6) →" data-he="🛒 קפוץ ללינקים וקופונים (שלב 6) ←">🛒 Jump to Links &amp; Coupons (Section 6) →</button>
+        </div>
+        <div class="quick-verdict-card buy">
+          <span class="badge badge-green" data-en="✅ Buy #2 • 📍 [2] Under Kitchen Sink" data-he="✅ מומלץ #2 • 📍 [2] מתחת לכיור המטבח">✅ Buy #2 • 📍 [2] Under Kitchen Sink</span>
+          <strong data-en="Under-Sink NSF 42/53 Activated Carbon" data-he="סנן פחם פעיל מתחת לכיור (תקן NSF 53)">Under-Sink NSF 42/53 Activated Carbon</strong>
+          <span style="color:var(--muted);" data-en="• Installed under kitchen sink. • Removes 95%–99% of chlorine, bad taste, lead &amp; cysts while keeping healthy Ca/Mg. • Cost-Benefit: ₪450–₪950 (or IDGU hot/cold bar) + ~₪220/yr refill." data-he="• מותקן בארון מתחת לכיור המטבח. • מנקה 95%–99% מהכלור, טעמי הלוואי והעופרת ומשאיר סידן ומגנזיום שבריאים לגוף. • עלות-תועלת: 450–950 ש״ח (או חם/קר ב-IDGU) + כ-220 ש״ח סנן בשנה.">• Installed under kitchen sink. • Removes 95%–99% of chlorine, bad taste, lead &amp; cysts while keeping healthy Ca/Mg. • Cost-Benefit: ₪450–₪950 (or IDGU hot/cold bar) + ~₪220/yr refill.</span>
+          <button type="button" class="quick-verdict-jump" onclick="setActiveStep(5, true)" data-en="🛒 Jump to Amazon Tax-Free Links (Section 6) →" data-he="🛒 קפוץ ללינקים בפטור ממע״מ (שלב 6) ←">🛒 Jump to Amazon Tax-Free Links (Section 6) →</button>
+        </div>
+        <div class="quick-verdict-card buy">
+          <span class="badge badge-green" data-en="✅ Buy #3 • 📍 [3] Shower Glass &amp; Head" data-he="✅ מומלץ #3 • 📍 [3] זכוכית המקלחון והטוש">✅ Buy #3 • 📍 [3] Shower Glass &amp; Head</span>
+          <strong data-en="Silica Nano-Coating (GL-1 / Rain-X) + KDF" data-he="ציפוי ננו לזכוכית (EnduroShield / Rain-X)">Silica Nano-Coating (GL-1 / Rain-X) + KDF</strong>
+          <span style="color:var(--muted);" data-en="• Applied on shower glass. • Only a hydrophobic coating makes droplets slide off before minerals dry into white spots (80%–90% less scrubbing). • Cost-Benefit: ₪38 (Rain-X) to ₪220 (2–3 yr Nano kit)." data-he="• מיושם ישירות על זכוכית המקלחון. • גורם לטיפות להחליק לפני שהאבנית מתייבשת על הזכוכית (80%–90% פחות כתמים). • עלות-תועלת: 38 ש״ח (Rain-X) עד 220 ש״ח לערכת ננו ל-3 שנים.">• Applied on shower glass. • Only a hydrophobic coating makes droplets slide off before minerals dry into white spots (80%–90% less scrubbing). • Cost-Benefit: ₪38 (Rain-X) to ₪220 (2–3 yr Nano kit).</span>
+          <button type="button" class="quick-verdict-jump" onclick="setActiveStep(1, true)" data-en="🔬 See Why Physics Requires This (Section 2) →" data-he="🔬 למה שום סנן ראשי לא יחליף את זה (שלב 2) ←">🔬 See Why Physics Requires This (Section 2) →</button>
+        </div>
+        <div class="quick-verdict-card avoid">
+          <span class="badge badge-danger" data-en="🚫 Disqualified / Red-Flagged Systems" data-he="🚫 נפסלו על הסף / מלכודות יקרות">🚫 Disqualified / Red-Flagged Systems</span>
+          <strong data-en="TipaTech (₪3,500+), Magnets &amp; US F-1000 Filters" data-he="טיפה-טק (3,500+ ש״ח), מגנטים ופילטר US F-1000">TipaTech (₪3,500+), Magnets &amp; US F-1000 Filters</strong>
+          <span style="color:var(--muted);" data-en="• TipaTech Lotus/Hardless: ₪2,500–₪4,000+ for a mesh filter without full IS 1505 certification (Hardless has health warnings). • US F-1000/2000 filter on Niga boiler: 0% scale protection (unlike the UK F-701R version, which includes scale resin)." data-he="• טיפה-טק (לוטוס/הרדלס): 2,500–4,000+ ש״ח על רשת ללא תו תקן 1505 למערכת השלמה. • פילטר אמריקאי F-1000 בניגא: 0% הגנת אבנית (להבדיל מהדגם הבריטי F-701R שכן כולל שרף מונע אבנית).">• TipaTech Lotus/Hardless: ₪2,500–₪4,000+ for a mesh filter without full IS 1505 certification (Hardless has health warnings). • US F-1000/2000 filter on Niga boiler: 0% scale protection (unlike the UK F-701R version, which includes scale resin).</span>
+          <button type="button" class="quick-verdict-jump" onclick="setActiveStep(3, true)" data-en="🕵️ See Full Brand Audit Table (Section 4) →" data-he="🕵️ לטבלת ביקורת החברות המלאה (שלב 4) ←">🕵️ See Full Brand Audit Table (Section 4) →</button>
+        </div>
+      </div>
+
+      <div class="concierge-box" aria-label="Interactive Q&amp;A Concierge">
+        <div style="font-size:0.84rem;font-weight:700;margin-block-end:8px;" data-en="🤖 Ask or Stress-Test the Guide (Click a Topic or Type Any Vendor / Claim):" data-he="🤖 שאלו או אתגרו את המדריך (לחצו על שאלה נפוצה או הקלידו שם חברה / טענה שיווקית):">🤖 Ask or Stress-Test the Guide (Click a Topic or Type Any Vendor / Claim):</div>
+        <div class="chips-group" id="conciergeChips">
+          <button type="button" class="chip-btn" onclick="askConcierge('shower')" data-en="🚿 Why won't main filters save shower glass?" data-he="🚿 למה מסנן ראשי לא חוסך גריפת מקלחון?">🚿 Why won't main filters save shower glass?</button>
+          <button type="button" class="chip-btn" onclick="askConcierge('siliphos')" data-en="🧪 Siliphos vs. IPS KalyxX (Health &amp; Standards)" data-he="🧪 סיליפוס מול IPS KalyxX (בריאות ותקנים)">🧪 Siliphos vs. IPS KalyxX (Health &amp; Standards)</button>
+          <button type="button" class="chip-btn" onclick="askConcierge('tipatech')" data-en="🏢 TipaTech Lotus &amp; Hardless: Marketing vs. Lab Proof" data-he="🏢 טיפה-טק (לוטוס / הרדלס): שיווק מול מעבדה">🏢 TipaTech Lotus &amp; Hardless: Marketing vs. Lab Proof</button>
+          <button type="button" class="chip-btn" onclick="askConcierge('undersink')" data-en="☕ Under-Sink Bars (InSinkErator / IDGU / Quooker)" data-he="☕ מערכות תת-כיוריות (ניגא / IDGU / קוקר)">☕ Under-Sink Bars (InSinkErator / IDGU / Quooker)</button>
+          <button type="button" class="chip-btn" onclick="askConcierge('verify')" data-en="🔍 How do we verify claims &amp; co-update this vault?" data-he="🔍 איך מאמתים ממצאים ומעדכנים יחד את המאגר?">🔍 How do we verify claims &amp; co-update this vault?</button>
+          <button type="button" class="chip-btn" onclick="askConcierge('desalination')" data-en="🌊 Desalinated Water Incident (Sept 2026): What Protects You?" data-he="🌊 אירוע זיהום/השבתת המים המותפלים: מה באמת מגן?">🌊 Desalinated Water Incident (Sept 2026): What Protects You?</button>
+        </div>
+        <div class="concierge-input-row">
+          <input type="text" id="conciergeInput" class="search-input" aria-label="Search vendor or ask a question" oninput="autoBiDiInput(this); handleFreeQuestion(); filterPageLive(this.value);" onkeydown="if(event.key==='Enter') handleFreeQuestion()" placeholder="Type a vendor or question (e.g. Amiad, KalyxX, F701R, Rain-X, RO)..." data-placeholder-en="Type a vendor or question (e.g. Amiad, KalyxX, F701R, Rain-X, RO)..." data-placeholder-he="הקלידו שם חברה או שאלה לאתגור (למשל: עמיעד, קליקס, F701R, טיפה טק, אוסמוזה)...">
+          <button type="button" class="btn-action primary" onclick="handleFreeQuestion()" data-en="⚡ Check Answer" data-he="⚡ בדוק תשובה">⚡ Check Answer</button>
+          <button type="button" class="btn-action" aria-haspopup="dialog" onclick="openCommunityFormModal(document.getElementById('conciergeInput').value)" data-en="📝 Add Question / Tip" data-he="📝 הוסף שאלה/טיפ למדריך">📝 Add Question / Tip</button>
+        </div>
+        <div id="conciergeReply" class="concierge-reply" aria-live="polite" aria-atomic="true">
+          <strong id="replyTitle" data-en="💡 Instant Engineering Verdict:" data-he="💡 פסק דין הנדסי מהיר:">💡 Instant Engineering Verdict:</strong>
+          <span id="replyBody" data-en="Select any chip above or type a vendor name to see the lab-verified answer, or copy a ready stress-test prompt in Section 5 to challenge the AI agent with your own follow-up." data-he="בחרו אחד מהכפתורים למעלה או הקלידו שם מוצר כדי לראות מיד את הממצאים המאומתים, או העתיקו בשלב 5 פרומפט מוכן לאתגור הסוכן.">Select any chip above or type a vendor name to see the lab-verified answer, or copy a ready stress-test prompt in Section 5 to challenge the AI agent with your own follow-up.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- STEP 2: 3 PHYSICAL MYTHS VS REALITY -->
+    <div class="section-title">
+      <span data-en="🔬 2. Three Marketing Myths vs. Physical &amp; Chemical Reality" data-he="🔬 2. שלוש אשליות שיווקיות מול הפיזיקה והכימיה במציאות">🔬 2. Three Marketing Myths vs. Physical &amp; Chemical Reality</span>
+      <button type="button" class="card-listen-btn" onclick="playSingleBox(1)" data-en="🔊 Listen to Section 2 (~14s)" data-he="🔊 האזנה לשלב 2 (~14 שנ׳)">🔊 Listen to Section 2 (~14s)</button>
+    </div>
+    <section class="compare-grid" id="stepBox2" data-step-title="2. Marketing Myths vs. Physical Reality"
+      data-step-candid-en="Look at these three side by side cards. First, shower spots happen because water evaporates completely, leaving all dissolved minerals on the glass. Only a hydrophobic nano coating makes water droplets roll off before evaporating. Second, calcium and magnesium are healthy to drink, whereas Siliphos adds phosphates."
+      data-step-exec-en="Three physical laws govern apartment water: evaporation leaves 100 percent of minerals on untreated shower glass, polyphosphate cartridges add phosphorus to drinking water, and high night water pressure in Ramat Gan cracks plastic filter bowls unless a pressure reducer is installed."
+      data-step-candid-he="תסתכלו על שלוש הכרטיסיות האלו זו לצד זו. ראשית, כתמים במקלחון נוצרים כי המים מתאדים במאה אחוז ומשאירים את כל המינרלים על הזכוכית. רק ציפוי ננו דוחה מים גורם לטיפות להחליק למטה לפני שהן מתאדות. שנית, סידן ומגנזיום בריאים לשתייה, בעוד שסיליפוס מוסיף פוספטים למים."
+      data-step-exec-he="שלושה חוקים פיזיקליים קובעים את התוצאה בדירה: אידוי משאיר מאה אחוז מהמינרלים על זכוכית מקלחון לא מצופה, מחסניות סיליפוס מוסיפות זרחן למי השתייה, ולחץ מים לילי גבוה ברמת גן סודק בתי סנן מפלסטיק ללא מקטין לחץ.">
+
+      <article class="mockup-card">
+        <span class="badge badge-amber" data-en="Problem A • Shower Glass Spots" data-he="בעיה א׳ • כתמי אבנית על זכוכית המקלחון">Problem A • Shower Glass Spots</span>
+        <h3 data-en="Evaporation Physics vs. Scale Crystallization" data-he="פיזיקה של אידוי טיפות מול מניעת התגבשות בדוד">Evaporation Physics vs. Scale Crystallization</h3>
+        <div class="mockup-split">
+          <div class="mockup-pane bad">
+            <strong data-en="❌ Main-Pipe Filter Alone" data-he="❌ מסנן דירתי ראשי בלבד">❌ Main-Pipe Filter Alone</strong>
+            <p style="margin:4px 0 0;" data-en="Water droplet hits glass and evaporates 100%. All dissolved Ca²⁺, Mg²⁺, and Siliphos stay on the glass as white spots." data-he="טיפת מים פוגעת בזכוכית ומתאדה ב-100%. כל הסידן, המגנזיום והסיליפוס המומסים נשארים על הזכוכית ככתם לבן."></p>
+          </div>
+          <div class="mockup-pane good">
+            <strong data-en="✅ Covalent Silica Nano-Coat" data-he="✅ ציפוי ננו דו-שלבי לזכוכית">✅ Covalent Silica Nano-Coat</strong>
+            <p style="margin:4px 0 0;" data-en="EnduroShield / Nano Glass GL-1 seals microscopic glass pores so droplets bead and slide down in seconds." data-he="ציפוי EnduroShield או Nano Glass GL-1 אוטם את נקבוביות הזכוכית כך שהטיפות מחליקות מטה, פלוס גריפה של 5 שניות."></p>
+          </div>
+        </div>
+      </article>
+
+      <article class="mockup-card">
+        <span class="badge badge-green" data-en="Problem B • Healthier Drinking Water" data-he="בעיה ב׳ • מים בריאים יותר לשתייה ולמקלחת">Problem B • Healthier Drinking Water</span>
+        <h3 data-en="Keep Calcium &amp; Magnesium, Strip Chlorine &amp; Metals" data-he="לשמור על הסידן והמגנזיום, להוציא כלור ומתכות">Keep Calcium &amp; Magnesium, Strip Chlorine &amp; Metals</h3>
+        <div class="mockup-split">
+          <div class="mockup-pane bad">
+            <strong data-en="❌ Whole-Home Siliphos" data-he="❌ סיליפוס על כל מי השתייה">❌ Whole-Home Siliphos</strong>
+            <p style="margin:4px 0 0;" data-en="Dissolves polyphosphates into all kitchen tap water, and does not remove chlorine, disinfection byproducts, or lead." data-he="ממיס פוליפוספטים לתוך כל מי השתייה והבישול בדירה, ולא מסנן כלור, טעמי לוואי או מתכות כבדות."></p>
+          </div>
+          <div class="mockup-pane good">
+            <strong data-en="✅ 100μm Mesh + Carbon Block" data-he="✅ רשת נירוסטה + פחם פעיל במטבח">✅ 100μm Mesh + Carbon Block</strong>
+            <p style="margin:4px 0 0;" data-en="Washable stainless mesh stops rust/sand on main pipe; under-sink NSF 42/53 carbon block removes chlorine &amp; lead." data-he="רשת נירוסטה עוצרת חלודה וחול בכניסה לדירה; סנן פחם פעיל תת-כיורי (NSF 42/53) מוציא כלור ומתכות ומשאיר מינרלים."></p>
+          </div>
+        </div>
+      </article>
+
+      <article class="mockup-card">
+        <span class="badge badge-purple" data-en="Problem C • Boiler &amp; Appliance Lifespan" data-he="בעיה ג׳ • שמירה על דוד השמש ומכשירי החשמל">Problem C • Boiler &amp; Appliance Lifespan</span>
+        <h3 data-en="Calcite Crust vs. Non-Sticky Aragonite Powder" data-he="גביש קלציט דביק מול אבקת ארגוניט שנשטפת במים">Calcite Crust vs. Non-Sticky Aragonite Powder</h3>
+        <div class="mockup-split">
+          <div class="mockup-pane bad">
+            <strong data-en="❌ Unprotected Plastic Bowls" data-he="❌ כוסות פלסטיק ללא מקטין לחץ">❌ Unprotected Plastic Bowls</strong>
+            <p style="margin:4px 0 0;" data-en="Night water pressure in Ramat Gan (>5 bar) cracks clear plastic filter housings after 2-3 years, causing floods." data-he="לחץ מים לילי ברמת גן (מעל 5 באר) סודק כוסות פלסטיק שקופות אחרי שנתיים-שלוש וגורם להצפה ללא מקטין לחץ."></p>
+          </div>
+          <div class="mockup-pane good">
+            <strong data-en="✅ IPS KalyxX (TGP) or Point Siliphos" data-he="✅ קליקס (TGP) או סיליפוס נקודתי לדוד">✅ IPS KalyxX (TGP) or Point Siliphos</strong>
+            <p style="margin:4px 0 0;" data-en="Metal-body galvanic turbulence turns scale into fine aragonite powder with 0 chemicals and 0 refills for 10 years." data-he="גוף מתכת גלווני (IPS KalyxX) הופך אבנית לאבקת ארגוניט שנשטפת במים ללא כימיקלים וללא החלפת מחסניות ל-10 שנים."></p>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <!-- STEP 3: INTERACTIVE 3-YEAR TCO & SETUP CALCULATOR -->
+    <div class="section-title">
+      <span data-en="🧮 3. Interactive 3-Year All-In Cost &amp; Apartment Architecture Calculator" data-he="🧮 3. מחשבון עלות כוללת ל-3 שנים והתאמת ארכיטקטורה לדירה">🧮 3. Interactive 3-Year All-In Cost &amp; Apartment Architecture Calculator</span>
+      <button type="button" class="card-listen-btn" onclick="playSingleBox(2)" data-en="🔊 Listen to Section 3 (~12s)" data-he="🔊 האזנה לשלב 3 (~12 שנ׳)">🔊 Listen to Section 3 (~12s)</button>
+    </div>
+    <section class="panel-card" id="stepBox3" data-step-title="3. Interactive 3-Year Cost Calculator"
+      data-step-candid-en="Use the two toggles here to match your apartment in Ramat Gan. Notice how a cheap Siliphos filter actually costs around three hundred shekels a year in replacement cartridges, whereas a chemical free galvanic tube costs more on day one but zero in maintenance for ten years."
+      data-step-exec-en="Compare three architectures over a three year horizon. Tier 2 combines a stainless mesh pre-filter, an IPS KalyxX galvanic descaler, and DIY shower glass nano-coating for roughly eighteen shekels per month amortized, with zero chemical refills."
+      data-step-candid-he="השתמשו בשני המתגים כאן כדי להתאים את הפתרון לדירה שלכם. שימו לב איך סנן סיליפוס זול עולה בפועל כ-300 שקלים בשנה במחסניות החלפה, בעוד שמערכת גלוונית ללא כימיקלים עולה יותר ביום הקנייה אבל אפס שקלים בתחזוקה לעשר שנים."
+      data-step-exec-he="השוו בין שלוש הארכיטקטורות על פני שלוש שנים. רמה 2 משלבת סנן רשת מנירוסטה, מערכת קליקס גלוונית וציפוי ננו למקלחון בעלות של כ-18 שקלים לחודש בפריסה רב-שנתית, עם אפס כימיקלים ואפס החלפת מחסניות.">
+
+      <div class="calc-controls">
+        <div class="control-block">
+          <span class="control-label" data-en="1. Your Primary Goal in the Apartment:" data-he="1. המטרה המרכזית שלך בדירה:">1. Your Primary Goal in the Apartment:</span>
+          <div class="seg-group" role="group" aria-label="Apartment Goal">
+            <button type="button" id="goalBalanced" class="seg-btn" aria-pressed="true" onclick="setCalcGoal('balanced')" data-en="⭐ Recommended: Chemical-Free Home + Shower Nano" data-he="⭐ מומלץ: הגנה דירתית ללא כימיקלים + ננו למקלחון">⭐ Recommended: Chemical-Free Home + Shower Nano</button>
+            <button type="button" id="goalBudget" class="seg-btn" aria-pressed="false" onclick="setCalcGoal('budget')" data-en="💰 Budget: Point Siliphos (Boiler Only) + Nano" data-he="💰 חסכוני: סיליפוס נקודתי רק לדוד/כביסה + ננו">💰 Budget: Point Siliphos (Boiler Only) + Nano</button>
+            <button type="button" id="goalFull" class="seg-btn" aria-pressed="false" onclick="setCalcGoal('full')" data-en="💎 Full Suite: Main Line + Under-Sink Carbon + Shower" data-he="💎 חבילה מלאה: ראשי + סנן פחם במטבח + מקלחון">💎 Full Suite: Main Line + Under-Sink Carbon + Shower</button>
+          </div>
+        </div>
+        <div class="control-block">
+          <span class="control-label" data-en="2. Space Inside Main Water Meter Cabinet:" data-he="2. מקום פנוי בארון שעון המים הראשי:">2. Space Inside Main Water Meter Cabinet:</span>
+          <div class="seg-group" role="group" aria-label="Cabinet Space">
+            <button type="button" id="spaceCompact" class="seg-btn" aria-pressed="true" onclick="setCalcSpace('compact')" data-en="📐 Narrow Ramat Gan Niche (<30cm)" data-he="📐 נישה צרה טיפוסית ברמת גן (פחות מ-30 ס״מ)">📐 Narrow Ramat Gan Niche (&lt;30cm)</button>
+            <button type="button" id="spaceWide" class="seg-btn" aria-pressed="false" onclick="setCalcSpace('wide')" data-en="🧰 Spacious Cabinet (>40cm Vertical)" data-he="🧰 ארון מרווח (מעל 40 ס״מ גובה פנוי)">🧰 Spacious Cabinet (&gt;40cm Vertical)</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="cards-grid" aria-live="polite" aria-atomic="true">
+        <div class="cap-card">
+          <span class="badge badge-blue" id="calcBadge1" data-en="Main Pipe &amp; Boiler Protection" data-he="הגנה על הצנרת, הדוד ומכונת הכביסה">Main Pipe &amp; Boiler Protection</span>
+          <div class="cap-amount" id="calcHardwareCost">₪1,530</div>
+          <h3 class="cap-title" id="calcHardwareTitle" data-en="IPS KalyxX Active 3/4&quot; + Compact 100μm Mesh" data-he="מערכת IPS KalyxX Active 3/4 + סנן רשת קומפקטי 100 מיקרון">IPS KalyxX Active 3/4" + Compact 100μm Mesh</h3>
+          <p class="cap-desc" id="calcHardwareDesc" data-en="Fits narrow 25cm niche. 76-85% scale reduction via TGP galvanic turbulence (NSF certified), zero Siliphos in drinking water, zero cartridge refills for 10 years." data-he="נכנס בנישה צרה של 25 ס״מ. מפחית 76%-85% מהתגבשות האבנית בטכנולוגיה גלוונית (תקן NSF), אפס סיליפוס במי השתייה, ואפס החלפת מחסניות ל-10 שנים."></p>
+        </div>
+
+        <div class="cap-card">
+          <span class="badge badge-green" data-en="Shower Glass &amp; Taps" data-he="זכוכית המקלחון והברזים">Shower Glass &amp; Taps</span>
+          <div class="cap-amount" id="calcShowerCost">₪220</div>
+          <h3 class="cap-title" data-en="EnduroShield / Nano Glass GL-1 DIY Kit" data-he="ערכת ציפוי ננו דו-שלבית EnduroShield / Nano Glass GL-1">EnduroShield / Nano Glass GL-1 DIY Kit</h3>
+          <p class="cap-desc" data-en="One-time 25-minute DIY application bonds covalently to glass silica for 2-3 years. Cuts squeegee effort to a 5-second swipe (avoid Rain-X on indoor showers)." data-he="יישום עצמי של 25 דקות שנקשר כימית לזכוכית ל-2 עד 3 שנים. מצמצם את הגריפה ל-5 שניות קלות בסוף המקלחת (הימנעו מ-Rain-X במקלחונים סגורים)."></p>
+        </div>
+
+        <div class="cap-card">
+          <span class="badge badge-purple" data-en="3-Year All-In Cost &amp; Monthly ROI" data-he="עלות כוללת ל-3 שנים ועלות חודשית">3-Year All-In Cost &amp; Monthly ROI</span>
+          <div class="cap-amount" id="calcTotal3Yr">₪2,100 (₪18/mo)</div>
+          <h3 class="cap-title" id="calcMaintTitle" data-en="Includes Plumber Install (₪350) + ₪0 Refills" data-he="כולל התקנת אינסטלטור (350 ש״ח) + 0 ש״ח מילויים">Includes Plumber Install (₪350) + ₪0 Refills</h3>
+          <p class="cap-desc" id="calcFailureNote" data-en="#1 Failure Mode to Prevent: Always install the 100μm washable mesh before KalyxX so municipal sand/rust doesn't clog the internal turbine electrodes." data-he="נקודת כשל מס׳ 1 למניעה: חובה להתקין סנן רשת רחיץ (100 מיקרון) לפני ה-KalyxX כדי שחול וחלודה מהצנרת העירונית לא יסתמו את האלקטרודות."></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- STEP 4: VENDOR & MARKETING CLAIMS AUDIT TABLE -->
+    <div class="section-title">
+      <span data-en="🕵️ 4. Independent Engineering Audit: Popular Brands vs. Lab Standards &amp; Thread Myths" data-he="🕵️ 4. ביקורת הנדסית עצמאית: מותגים פופולריים מול תקני מעבדה וטעויות ברשת">🕵️ 4. Independent Engineering Audit: Popular Brands vs. Lab Standards &amp; Thread Myths</span>
+      <button type="button" class="card-listen-btn" onclick="playSingleBox(3)" data-en="🔊 Listen to Section 4 (~14s)" data-he="🔊 האזנה לשלב 4 (~14 שנ׳)">🔊 Listen to Section 4 (~14s)</button>
+    </div>
+    <section class="panel-card" id="stepBox4" data-step-title="4. Independent Vendor &amp; Thread Audit"
+      data-step-candid-en="Both vendor brochures and internal office threads mix myths with real insights. For example, colleagues feared Siliphos is toxic poison, which is false at NSF doses. And on under-sink boiling bars, US carbon filters like F-1000 have zero scale protection and burn out tanks, whereas the UK version F-701R sold on IDGU includes scale resin for 454 liters and works reliably when paired with main-line protection."
+      data-step-exec-en="This engineering audit separates lab-verified physics from vendor marketing and forum myths across five major water systems, including the critical split between carbon-only US InSinkErator filters and the UK F-701R scale-resin filter."
+      data-step-candid-he="גם פרוספקטים שיווקיים וגם שרשורים פנימיים מערבבים מיתוסים עם תובנות אמת. למשל, יש הנבהלים שסיליפוס הוא רעל מסוכן, מה שלא נכון במינון תקני. ובמערכות תת-כיוריות רותחות, הפילטר האמריקאי F-1000 חסר הגנת אבנית ושורף את הדוד, בעוד שהדגם הבריטי F-701R שנמכר ב-IDGU כן כולל שרף נגד אבנית ל-454 ליטר ועובד מצוין בשילוב הגנה בשעון הראשי."
+      data-step-exec-he="טבלת הביקורת ההנדסית מפרידה בין עובדות מעבדה ופיזיקה לבין הבטחות שיווקיות, כולל האבחנה הקריטית בין הפילטר האמריקאי חסר ההגנה מאבנית לבין הדגם הבריטי F-701R שנמכר בישראל.">
+
+      <div class="table-wrap">
+        <table class="audit-table">
+          <thead>
+            <tr>
+              <th data-en="System / Brand" data-he="מערכת / מותג">System / Brand</th>
+              <th data-en="How It Works &amp; Standards" data-he="מנגנון פעולה ותקינה רשמית">How It Works &amp; Standards</th>
+              <th data-en="What It Solves (Pros)" data-he="מה זה באמת פותר (יתרונות)">What It Solves (Pros)</th>
+              <th data-en="Red Flags &amp; 2-Year Owner Lessons" data-he="דגלים אדומים ולקחי אמת של משתמשים">Red Flags &amp; 2-Year Owner Lessons</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong data-en="1. IPS KalyxX + Washable Mesh (Main Pipe)" data-he="1. קליקס (IPS KalyxX) + רשת נירוסטה (לשעון הראשי)">1. IPS KalyxX + Washable Mesh (Main Pipe)</strong><br><span class="badge badge-green" data-en="✅ Best Main-Line Pick" data-he="✅ הבחירה המומלצת לקו ראשי">✅ Best Main-Line Pick</span></td>
+              <td data-en="Stops scale from sticking to boiler coils without adding any chemicals. Official US NSF certification." data-he="מונע מהאבנית להידבק לגוף החימום בדוד ובמדיח, בלי להוסיף שום חומר למים. בעל תקן אמריקאי רשמי (NSF).">Stops scale from sticking to boiler coils without adding any chemicals. Official US NSF certification.</td>
+              <td data-en="• 0 chemicals in tap water. • 0 filter refills for 10 years. • Metal body that never cracks." data-he="• 0 חומרים מתווספים למי השתייה. • 0 החלפת סננים ל-10 שנים. • גוף מתכת קומפקטי שלא נסדק.">• 0 chemicals in tap water.<br>• 0 filter refills for 10 years.<br>• Metal body that never cracks.</td>
+              <td data-en="• Must pair with a simple mesh filter to catch sand/rust. • Does NOT prevent white water spots on shower glass." data-he="• חובה לשים לפניו סנן רשת פשוט לעצירת חול וחלודה. • לא מונע כתמי טיפות על זכוכית המקלחון.">• Must pair with a simple mesh filter to catch sand/rust.<br>• Does NOT prevent white water spots on shower glass.</td>
+            </tr>
+            <tr>
+              <td><strong data-en="2. Amiad Sapir / Hardy (Siliphos Balls)" data-he="2. עמיעד ספיר / הארדי (כדוריות סיליפוס)">2. Amiad Sapir / Hardy (Siliphos Balls)</strong><br><span class="badge badge-blue" data-en="👍 Good for Boiler Only" data-he="👍 מומלץ נקודתית לדוד/כביסה">👍 Good for Boiler Only</span></td>
+              <td data-en="Mesh + dissolving balls (Siliphos) that coat scale so it doesn&apos;t stick. Israeli Standard 1505." data-he="רשת ללכלוך גס + כדוריות מתמוססות שעוטפות את האבנית. נושא תו תקן ישראלי 1505.">Mesh + dissolving balls (Siliphos) that coat scale so it doesn&apos;t stick. Israeli Standard 1505.</td>
+              <td data-en="• Cheap upfront (₪480–₪790). • Works well when installed only on the boiler/washer pipe." data-he="• זול לקנייה ראשונית (480–790 ש״ח). • עושה עבודה טובה כשמתקינים אותו רק בכניסה לדוד.">• Cheap upfront (₪480–₪790).<br>• Works well when installed only on the boiler/washer pipe.</td>
+              <td data-en="• Costs ~₪250/year in ball refills every 6 months. • Plastic cup can crack without a pressure reducer." data-he="• דורש מילוי כדוריות בכ-250 ש״ח בשנה כל חצי שנה. • כוס הפלסטיק עלולה להיסדק מלחץ מים גבוה בלילה.">• Costs ~₪250/year in ball refills every 6 months.<br>• Plastic cup can crack without a pressure reducer.</td>
+            </tr>
+            <tr>
+              <td><strong data-en="3. TipaTech (Lotus Hybrid) &amp; 'Hardless'" data-he="3. טיפה-טק (לוטוס היברידי) ופרשת 'הרדלס'">3. TipaTech (Lotus Hybrid) &amp; 'Hardless'</strong><br><span class="badge badge-danger" data-en="⚠️ High Price &amp; Marketing Gaps" data-he="⚠️ יקר מאוד ופערים בשיווק">⚠️ High Price &amp; Marketing Gaps</span></td>
+              <td data-en="Multi-mesh housing. Shows component lab tests rather than full Israeli Standard 1505 certification." data-he="שילוב רשתות. מציגים בדיקות לרכיבים בודדים במקום תו תקן ישראלי 1505 מלא למכשיר השלם.">Multi-mesh housing. Shows component lab tests rather than full Israeli Standard 1505 certification.</td>
+              <td data-en="• Catches coarse rust and sand (just like a ₪250 Amiad mesh filter)." data-he="• עוצר חול וחלודה מהצנרת (בדיוק כמו סנן רשת של עמיעד ב-250 ש״ח).">• Catches coarse rust and sand (just like a ₪250 Amiad mesh filter).</td>
+              <td data-en="• Very expensive (₪2,500–₪4,000+). • Lab links test other models (T-18) instead of Lotus Hybrid. • Earlier 'Hardless' model now has red health warnings." data-he="• יקר מאוד (2,500–4,000+ ש״ח). • תעודות המעבדה באתר הן לדגם תעשייתי אחר (T-18). • דגם העבר שלהם ('הרדלס') מופיע כיום עם אזהרות בריאות.">• Very expensive (₪2,500–₪4,000+).<br>• Lab links test other models (T-18) instead of Lotus Hybrid.<br>• Earlier 'Hardless' model now has red health warnings.</td>
+            </tr>
+            <tr>
+              <td><strong data-en="4. Under-Sink Hot/Cold Bars (InSinkErator / Quooker)" data-he="4. מערכות תת-כיוריות חם/קר (ניגא / IDGU / קוקר)">4. Under-Sink Hot/Cold Bars (InSinkErator / Quooker)</strong><br><span class="badge badge-purple" data-en="☕ Clean Kitchen Counter" data-he="☕ מפנה את השיש במטבח">☕ Clean Kitchen Counter</span></td>
+              <td data-en="Under-sink boiler/chiller + carbon filter for tasty drinking water." data-he="מיכל הרתחה וקירור מתחת לכיור + סנן פחם לטעם וניקיון מי השתייה.">Under-sink boiler/chiller + carbon filter for tasty drinking water.</td>
+              <td data-en="• Frees up kitchen counter space. • Instant boiling and cold filtered water." data-he="• מפנה לחלוטין את השיש במטבח. • מים רותחים וקרים בלחיצה מברז ייעודי.">• Frees up kitchen counter space.<br>• Instant boiling and cold filtered water.</td>
+              <td data-en="• Avoid the US carbon-only filter (F-1000/2000): 0% scale protection ruins the boiler. • The UK version F-701R (sold via IDGU, WRAS certified) DOES include scale resin (454L / 6-mo capacity; best paired with main-line KalyxX or Siliphos + mesh). • Drill cabinet air vents for the chiller." data-he="• הימנעו מהפילטר האמריקאי (F-1000/2000): 0% הגנת אבנית שישרוף את הדוד. • הדגם הבריטי F-701R (נמכר גם ב-IDGU) כן מותאם למים קשים וכולל שרף נגד אבנית (קיבולת 454 ליטר / חצי שנה; מומלץ בשילוב קליקס או סיליפוס+מיקרון בראשי). • קדחו חורי אוורור בארון למקרר.">• Avoid the US carbon-only filter (F-1000/2000): 0% scale protection ruins the boiler.<br>• The UK version F-701R (sold via IDGU, WRAS certified) DOES include scale resin (454L / 6-mo capacity; best paired with main-line KalyxX or Siliphos + mesh).<br>• Drill cabinet air vents for the chiller.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- STEP 5: SEARCHABLE Q&A VAULT & HOW WE COLLABORATE -->
+    <div class="section-title">
+      <span data-en="⚖️ 5. Fact-Checking 5 Misconceptions from Internal Threads &amp; How to Stress-Test Claims" data-he="⚖️ 5. ביקורת מדעית על 5 טעויות ואי-הבנות מתוך השרשורים שלנו (ואיך מאתגרים יחד)">⚖️ 5. Fact-Checking 5 Misconceptions from Internal Threads &amp; How to Stress-Test Claims</span>
+      <button type="button" class="card-listen-btn" onclick="playSingleBox(4)" data-en="🔊 Listen to Section 5 (~13s)" data-he="🔊 האזנה לשלב 5 (~13 שנ׳)">🔊 Listen to Section 5 (~13s)</button>
+    </div>
+    <section class="panel-card" id="stepBox5" data-step-title="5. Critique of 5 Thread Misconceptions"
+      data-step-candid-en="Why shouldn't we treat internal email threads as gospel truth? Because most messages in those threads were written out of confusion, fear of chemicals, or misunderstandings of physics. Below we fact-check five big misconceptions from our internal threads against actual water chemistry and engineering standards."
+      data-step-exec-en="Section 5 audits five widespread misconceptions from internal employee threads against toxicology, thermodynamics, and Israeli water standards, and provides an in-page form and grounded prompt so colleagues can stress-test new questions without polluting the guide with rumors."
+      data-step-candid-he="למה אסור להתייחס למדריךים פנימיים כאל אמת מדעית? כי רוב ההודעות ברשת נכתבו מתוך חוסר הבנה, בהלה מכימיקלים או בלבול בין חלודה לאבנית. למטה ריכזנו ביקורת הנדסית על חמש טעויות נפוצות מתוך השרשורים שלנו מול העובדות הפיזיקליות והרפואיות."
+      data-step-exec-he="חלק 5 מעמיד למבחן מדעי חמש אי-הבנות נפוצות מתוך השרשורים הפנימיים מול טוקסיקולוגיה, פיזיקה ותקני מים, ומספק טופס מובנה בדף ופרומפט מבוסס עובדות כדי לאתגר שאלות חדשות בלי לזהם את המדריך בשמועות.">
+
+      <div style="background:var(--card-alt);border:1px solid var(--border);border-radius:12px;padding:16px;margin-block-end:18px;">
+        <h3 style="margin-block:0 6px;font-size:0.98rem;" data-en="🔄 How Our 'Hive Mind' Works in 3 Simple Steps (Zero Homework, Zero Rumor Drift)" data-he="🔄 איך עובד 'מוח הכוורת' ב-3 צעדים פשוטים (ללא שיעורי בית וללא זיהום מידע)">🔄 How Our 'Hive Mind' Works in 3 Simple Steps (Zero Homework, Zero Rumor Drift)</h3>
+        <p style="margin-block:0 12px;font-size:0.86rem;color:var(--muted);" data-en="So everyone learns from one verified source without installing anything or letting sales rumors overwrite lab facts, here is how any colleague can use or challenge this guide:" data-he="כדי שכולם יחכימו ממאגר אחד בלי להתקין כלום ובלי ששמועות לא מבוססות ידרסו את העובדות המדעיות, כל אחד יכול להשתמש במדריך או לאתגר אותו ב-3 צעדים פשוטים:"></p>
+        <div class="cards-grid" style="margin-block-end:14px;">
+          <div class="cap-card" style="background:var(--card);">
+            <span class="badge badge-blue" data-en="Step 1 • Learn or Save for Home" data-he="צעד 1 • בודקים או מורידים PDF לבית">Step 1 • Learn or Save for Home</span>
+            <p class="cap-desc" data-en="• Listen to the 90-second Audio Guide at the top or check the comparison tables. • Click Download PDF to read offline at home or share on WhatsApp with family." data-he="• מאזינים למדריך הקולי למעלה (דקה וחצי) או בודקים בטבלאות. • לוחצים על הורדת PDF כדי לקרוא בבית או לשתף בוואטסאפ עם בן/בת הזוג והאינסטלטור."></p>
+          </div>
+          <div class="cap-card" style="background:var(--card);">
+            <span class="badge badge-green" data-en="Step 2 • Challenge Any Salesman with AI" data-he="צעד 2 • מאתגרים לבד מול ה-AI בלחיצה">Step 2 • Challenge Any Salesman with AI</span>
+            <p class="cap-desc" data-en="• Got a quote for a new water system? • Click Copy Stress-Test Prompt below, paste it into Gemini, and ask your hardest question." data-he="• קיבלתם הצעה למערכת חדשה או הבטחה של איש מכירות? • לוחצים על העתק פרומפט לאתגור למטה, מדביקים ב-Gemini ושואלים כל שאלה."></p>
+          </div>
+          <div class="cap-card" style="background:var(--card);">
+            <span class="badge badge-purple" data-en="Step 3 • Grow the Shared Vault (In-Page Form)" data-he="צעד 3 • מחכימים יחד (טופס מובנה בדף)">Step 3 • Grow the Shared Vault (In-Page Form)</span>
+            <p class="cap-desc" data-en="• Found a new model (like UK F-701R), coupon, or missing question? • Open the In-Page Q&amp;A Form below so we verify manufacturer specs &amp; standards and publish anonymized insights for everyone." data-he="• מצאתם דגם ספציפי (כמו F-701R הבריטי), ניסיון מהדירה או שאלה חסרה? • מלאו את הטופס המובנה למטה כדי שנאמת מול מפרטי היצרן והתקנים ונוסיף לדף באנונימיות לטובת כולם."></p>
+          </div>
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-block-end:8px;">
+          <button type="button" id="openCommFormSec5Btn" class="btn-action primary" aria-haspopup="dialog" onclick="openCommunityFormModal()" data-en="📝 1. Add Question / Vendor Tip (In-Page Form)" data-he="📝 1. הוספת שאלה / ניסיון מהשטח (טופס מובנה בדף)">📝 1. Add Question / Vendor Tip (In-Page Form)</button>
+          <button type="button" id="copyPromptBtn" class="btn-action" onclick="copyGroundedPrompt()" data-en="📋 2. Copy Stress-Test Prompt for Gemini" data-he="📋 2. העתק פרומפט מוכן לאתגור ב-Gemini">📋 2. Copy Stress-Test Prompt for Gemini</button>
+          <a id="pdfDownloadBtnSec4" href="water_scale_guide_en.pdf" download="Israel_Home_Water_Scale_Guide_EN.pdf" class="btn-action" data-en="📄 3. Download Full Guide as PDF (For Home)" data-he="📄 3. הורדת המדריך המלא כ-PDF (ללימוד בבית)">📄 3. Download Full Guide as PDF (For Home)</a>
+          <a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=elad2109@gmail.com&amp;su=%5BWater%20Guide%20Challenge%5D%20New%20Vendor%20or%20Question%20to%20Verify&amp;body=Hi%20Elad%2C%0A%0APlease%20have%20your%20agent%20fact-check%20and%20add%20this%20question%2Fvendor%20claim%20to%20go%2Fil-water-guide%3A%0A%0A1.%20Product%20%2F%20Claim%3A%20%0A2.%20What%20I%20heard%20%2F%20found%3A%20" target="_blank" rel="noopener" class="btn-action" data-en="✉️ Direct Email Option ↗" data-he="✉️ חלופה: שליחה במייל ישיר ↗">✉️ Direct Email Option ↗</a>
+        </div>
+        <label for="sharedPromptTextarea" style="font-size:0.78rem;font-weight:600;color:var(--muted);display:block;" data-en="Ready-to-paste prompt (loads all verified physics, IS 1505 / NSF standards, and TLV community findings into any colleague's AI agent):" data-he="פרומפט מוכן להדבקה (טוען ל-Gemini של כל חבר בגוגל את כל חוקי הפיזיקה, תקן 1505/NSF והממצאים שלנו כדי שתוכלו לשאול שאלות המשך ולאתגר מותגים):">Ready-to-paste prompt (loads all verified physics, IS 1505 / NSF standards, and TLV community findings into any colleague's AI agent):</label>
+        <textarea id="sharedPromptTextarea" class="prompt-copy-area" readonly>Act as a skeptical, evidence-based water engineering advisor grounded in the Google Israel Community Water &amp; Scale Guide (go/il-water-guide). Apply these verified constraints: (1) Israeli sewage brine regulations ban salt ion-exchange softeners on apartment main pipes; (2) Neither Siliphos (polyphosphate) nor galvanic/TAC (IPS KalyxX) removes dissolved Ca/Mg ions, so 100% of minerals remain on shower glass when water droplets evaporate (only hydrophobic silica nano-coating like EnduroShield/Nano Glass GL-1 + a 5s squeegee solves shower glass); (3) Ca/Mg are essential minerals for human health, whereas main-line Siliphos adds phosphates to drinking water; (4) On under-sink InSinkErator bars, distinguish carbon-only US filters (F-1000/2000, 0% scale protection) from the UK hard-water model F-701R (WRAS certified, sold via IDGU, includes scale-inhibiting resin rated 454L / 6 months); (5) Verify every vendor claim against full-system Israeli Standard IS 1505, WRAS, or NSF/ANSI 42/53/61/372 (flagging partial component tests or unit-test-without-E2E marketing). Now stress-test my question:</textarea>
+      </div>
+
+      <div class="qa-list" id="qaList">
+        <article class="qa-card">
+          <span class="badge badge-danger" data-en="Thread Myth #1 • 'Siliphos Is Dangerous Poison'" data-he="טעות מס׳ 1 בשרשור • 'סיליפוס הוא כימיקל מסוכן'">Thread Myth #1 • 'Siliphos Is Dangerous Poison'</span>
+          <h3 data-en="Myth: 'Siliphos puts dangerous chemicals into our water!' — Reality: Safe dose, just annoying maintenance" data-he="יש הנבהלים: 'סיליפוס מכניס כימיקלים מסוכנים למים' — האמת: בטוח לגמרי, פשוט דורש תחזוקה">Myth: 'Siliphos puts dangerous chemicals into our water!' — Reality: Safe dose, just annoying maintenance</h3>
+          <p data-en="• A glass of Siliphos water has 300x less phosphorus than a slice of cheese or bread. • Salesmen use this fear to sell ₪3,500 magnets. • Why we still prefer KalyxX: saves ~₪250/year and spares you opening a filter cup every 6 months." data-he="• בכוס מים עם סיליפוס תקני יש פי 300 פחות זרחן מאשר בפרוסת גבינה או לחם. • אנשי מכירות מנצלים את הפחד מ'כימיקלים' כדי למכור מגנטים ב-3,500 ש״ח. • למה בכל זאת עדיף KalyxX: חוסך כ-250 ש״ח בשנה וחוסך התעסקות בהחלפת כדוריות כל חצי שנה."></p>
+        </article>
+
+        <article class="qa-card">
+          <span class="badge badge-danger" data-en="Thread Myth #2 • US F-1000 vs. UK F-701R InSinkErator Filters" data-he="טעות מס׳ 2 בשרשור • פילטר אמריקאי (F-1000) מול בריטי (F-701R) בניגא">Thread Myth #2 • US F-1000 vs. UK F-701R InSinkErator Filters</span>
+          <h3 data-en="Crucial Model Split: US F-1000/2000 burns out boilers (0% scale), whereas UK F-701R includes scale resin" data-he="אבחנה קריטית בין הדגמים: האמריקאי (F-1000) שורף את הדוד, בעוד שהבריטי (F-701R) כן מונע אבנית">Crucial Model Split: US F-1000/2000 burns out boilers (0% scale), whereas UK F-701R includes scale resin</h3>
+          <p data-en="• US filters (F-1000 / F-2000) are made for soft American water with ZERO scale protection and ruin a ₪3,000 boiling tank. • By contrast, the UK hard-water model F-701R (WRAS certified, sold via IDGU) DOES contain ion-exchange scale resin + carbon + lead reduction. • Note F-701R capacity is 454L (~2.5L/day for 6 mos), so pairing main-line KalyxX or Siliphos + micron mesh keeps protection rock-solid." data-he="• הפילטר האמריקאי (F-1000 / F-2000) מיועד למים רכים בארה״ב עם 0% הגנת אבנית וישרוף דוד של 3,000 ש״ח. • לעומתו, הדגם הבריטי F-701R (תקן WRAS, נמכר גם דרך IDGU) מיועד למים קשים וכולל שרף חילוף יונים להפחתת אבנית פלוס סינון כלור ועופרת. • שימו לב שקיבולת ה-F-701R היא 454 ליטר (החלפה כל חצי שנה), ולכן שילוב עם קליקס או סיליפוס+מיקרון בראשי נותן הגנה מיטבית לאורך שנים."></p>
+        </article>
+
+        <article class="qa-card">
+          <span class="badge badge-amber" data-en="Thread Myth #3 • 'Kettle Dust Means It Failed'" data-he="טעות מס׳ 3 בשרשור • 'יש אבנית בקומקום אז זה לא עובד'">Thread Myth #3 • 'Kettle Dust Means It Failed'</span>
+          <h3 data-en="Myth: 'I still see white dust in my kettle, so the filter is broken' — Reality: Closed kettles trap minerals" data-he="יש המתאכזבים: 'עדיין יש אבקה לבנה בקומקום' — האמת: שום סנן דירתי לא מעלים סידן ממים עומדים">Myth: 'I still see white dust in my kettle, so the filter is broken' — Reality: Closed kettles trap minerals</h3>
+          <p data-en="• No legal apartment main-pipe filter removes calcium from the water; it only stops calcium from gluing onto your boiler coil. • In a closed kettle where water boils and evaporates with nowhere to drain, minerals stay at the bottom as soft dust. • Simple fix: boil a spoon of citric acid once a month (₪5/year)." data-he="• שום מסנן דירתי חוקי בארץ לא מוציא את הסידן מהמים, אלא רק מונע ממנו להידבק כגוש קשיח לדוד ולמדיח. • בקומקום סגור המים מתאדים ואין להם לאן לזרום, ולכן הסידן נשאר בתחתית כאבקה רכה. • הפתרון הפשוט לקומקום: להרתיח כף מלח לימון פעם בחודש (5 ש״ח בשנה)."></p>
+        </article>
+
+        <article class="qa-card">
+          <span class="badge badge-blue" data-en="Thread Myth #4 • 'Brown Filter = Stops Scale'" data-he="טעות מס׳ 4 בשרשור • 'הפילטר יוצא חום אז הוא עוצר אבנית'">Thread Myth #4 • 'Brown Filter = Stops Scale'</span>
+          <h3 data-en="Myth: 'My filter turns dark brown every 6 months, proving it stops scale' — Reality: Brown is rust, not scale" data-he="יש הטוענים: 'הפילטר יוצא חום כל חצי שנה, הוכחה שהוא מונע אבנית' — האמת: חום זה חלודה, לא אבנית">Myth: 'My filter turns dark brown every 6 months, proving it stops scale' — Reality: Brown is rust, not scale</h3>
+          <p data-en="• Limescale dissolved in water is 100% clear and invisible. • A brown filter just means it caught pipe rust and sand from the street. • A ₪250 washable Amiad mesh catches the exact same rust without paying ₪3,500." data-he="• אבנית מומסת במים היא שקופה לחלוטין. • צבע חום על הפילטר מראה רק שהוא תפס חלודה וחול מהצינור העירוני. • סנן רשת רחיץ של עמיעד ב-250 ש״ח תופס בדיוק את אותה חלודה בלי לשלם אלפי שקלים."></p>
+        </article>
+
+        <article class="qa-card">
+          <span class="badge badge-green" data-en="Thread Myth #5 • 'Removing Scale Is Healthier'" data-he="טעות מס׳ 5 בשרשור • 'הוצאת אבנית בריאה לגוף'">Thread Myth #5 • 'Removing Scale Is Healthier'</span>
+          <h3 data-en="Myth: 'Removing scale makes tap water healthier to drink' — Reality: Scale is healthy Calcium &amp; Magnesium" data-he="ההנחה הרווחת: 'הוצאת אבנית הופכת את המים לבריאים יותר' — האמת: אבנית היא סידן ומגנזיום שבריאים לגוף">Myth: 'Removing Scale Is Healthier' — Reality: Scale is healthy Calcium &amp; Magnesium</h3>
+          <p data-en="• Limescale is simply Calcium and Magnesium, which are healthy for your heart and bones (scale only hurts heating elements, not people). • What actually makes drinking water healthier is an under-sink carbon filter (NSF 53) that removes chlorine taste, lead from old pipes, and dirt." data-he="• אבנית היא פשוט סידן ומגנזיום שבריאים ללב ולעצמות (אבנית פוגעת בגופי חימום, לא בגוף האדם). • מה שבאמת הופך מי שתייה לבריאים וטעימים יותר הוא סנן פחם מתחת לכיור (תקן NSF 53) שמוציא כלור, עופרת מצנרת ישנה וטעמי לוואי."></p>
+        </article>
+
+        <!-- AUTO_QA_VAULT_START -->
+        <article class="qa-card">
+          <span class="badge badge-green" data-en="Community Fact-Check • UK Model F-701R (IDGU)" data-he="עודכן מאתגור הקהילה • סנן בריטי F-701R ב-IDGU">Community Fact-Check • UK Model F-701R (IDGU)</span>
+          <h3 data-en="Are all original InSinkErator filters US-only without scale protection? No: the UK F-701R fits hard water" data-he="האם כל הפילטרים המקוריים של InSinkErator הם אמריקאיים ללא הגנת אבנית? לא: דגם F-701R הבריטי מתאים למים קשים">Are all original InSinkErator filters US-only without scale protection? No: the UK F-701R fits hard water</h3>
+          <p data-en="• Verified against InSinkErator UK &amp; WRAS specs: while US models (F-1000/F-2000) lack scale protection, the UK 230V NeoTank filter F-701R (sold in twin-packs via IDGU and UK suppliers) includes ion-exchange scale-inhibiting resin plus carbon/lead/cyst filtration. • Rated capacity is 454 liters (replace every 6 months); TLV owners report 2+ trouble-free years when paired with main-line Siliphos/KalyxX + micron mesh." data-he="• אומת מול מפרט InSinkErator UK ותקן WRAS: בעוד שהדגמים האמריקאיים (F-1000/2000) חסרי הגנת אבנית, הדגם הבריטי F-701R (למערכות NeoTank 230V, נמכר בזוגות גם ב-IDGU) כולל שרף ייעודי להפחתת קשיות ואבנית לצד סינון כלור ועופרת. • קיבולת הסנן היא 454 ליטר (החלפה כל 6 חודשים); עובדים בת״א מדווחים על שנתיים+ של עבודה חלקה בשילוב סנן ראשי (סיליפוס או קליקס + מיקרון)."></p>
+        </article>
+        <article class="qa-card">
+          <span class="badge badge-purple" data-en="2 Tips from the Thread That ARE True" data-he="2 טיפים מהספרות המקצועית שדווקא נכונים לגמרי">2 Tips from the Thread That ARE True</span>
+          <h3 data-en="What DID colleagues get right about under-sink water systems?" data-he="אילו 2 עצות פרקטיות מהספרות המקצועית כן נכונות וחשובות?">What DID colleagues get right about under-sink water systems?</h3>
+          <p data-en="• Cabinet Air Vents: Under-sink chillers give off heat; drill air holes in the bottom of the kitchen cabinet or the chiller will overheat and die. • Tap Model HC3300: On InSinkErator taps, model HC3300 has a much stronger lever than older spring taps." data-he="• חורי אוורור בארון הכיור: מקרר מים תת-כיורי פולט חום; חובה לקדוח פתחי אוורור בתחתית הארון אחרת המקרר יישרף מחום תוך שנה וחצי. • דגם ברז HC3300: בברזי InSinkErator, הידית בדגם HC3300 אמינה וחזקה יותר מהקפיץ בדגמים הישנים."></p>
+        </article>
+        <!-- AUTO_QA_VAULT_END -->
+      </div>
+    </section>
+
+    <!-- STEP 6: PROVEN EFFECTIVENESS, LIFESPAN, REFILLS, DIRECT LINKS & COUPONS -->
+    <div class="section-title">
+      <span data-en="🛒 6. Effectiveness (%), Lifespan, Direct Purchase Links &amp; Verified Coupons" data-he="🛒 6. יעילות מוכחת (%), אורך חיים, קישורי רכישה וקודי קופון מאומתים">🛒 6. Effectiveness (%), Lifespan, Direct Purchase Links &amp; Verified Coupons</span>
+      <button type="button" class="card-listen-btn" onclick="playSingleBox(5)" data-en="🔊 Listen to Section 6 (~13s)" data-he="🔊 האזנה לשלב 6 (~13 שנ׳)">🔊 Listen to Section 6 (~13s)</button>
+    </div>
+    <section class="panel-card" id="stepBox6" data-step-title="6. Effectiveness, Lifespan &amp; Verified Links"
+      data-step-candid-en="Here is your quick shopping table with proven lab percentages, how many years each part lasts, direct links, and verified discount codes like 5SPECIAL on Nyga, BOOLKSP on KSP, and zero tax on Amazon orders under 75 dollars."
+      data-step-exec-en="Section 6 summarizes lab-verified effectiveness, replacement intervals, direct product links, and active coupons across all four recommended components."
+      data-step-candid-he="כאן ריכזנו בטבלה פשוטה את אחוזי היעילות האמיתיים, לכמה שנים כל מכשיר מספיק, לינקים ישירים לרכישה וקודי קופון בדוקים כמו 5SPECIAL באתר ניגא, BOOLKSP ב-KSP ופטור ממע״מ באמזון מתחת ל-75 דולר."
+      data-step-exec-he="חלק 6 מסכם בשפה פשוטה את אחוזי האפקטיביות, תדירות החלפת החלפים, קישורים ישירים לרכישה וקודי קופון פעילים.">
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th data-en="Product &amp; Direct Link" data-he="מוצר וקישור ישיר לרכישה">Product &amp; Direct Link</th>
+              <th data-en="Proven Effectiveness (%)" data-he="מה זה פותר ובאיזה אחוז (%)">Proven Effectiveness (%)</th>
+              <th data-en="Price, Lifespan &amp; Refills" data-he="מחיר, לכמה שנים מספיק וחלפים">Price, Lifespan &amp; Refills</th>
+              <th data-en="Verified Coupons &amp; Discounts" data-he="קודי קופון והנחות מאומתות">Verified Coupons &amp; Discounts</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <strong data-en="1. IPS KalyxX (3/4&quot; Main Pipe)" data-he="1. מונע אבנית IPS KalyxX (לשעון הראשי)">1. IPS KalyxX (3/4&quot; Main Pipe)</strong><br>
+                <a href="https://www.nyga.co.il/product/%d7%9e%d7%a2%d7%a8%d7%9b%d7%aa-%d7%9c%d7%94%d7%a4%d7%97%d7%aa%d7%aa-%d7%90%d7%91%d7%a0%d7%99%d7%aa-kalyxx-%d7%93%d7%92%d7%9d-mario/" target="_blank" rel="noopener" style="color:var(--primary);font-weight:600;" data-en="🔗 Official Importer Nyga ↗" data-he="🔗 לרכישה אצל היבואן ניגא ↗">🔗 Official Importer Nyga ↗</a><br>
+                <a href="https://mayim4u.co.il/%D7%9E%D7%95%D7%A0%D7%A2-%D7%90%D7%91%D7%A0%D7%99%D7%AA-KalyXx-IPS-BlueLine-%D7%A2%D7%9D-%D7%9E%D7%A1%D7%A0%D7%9F-%D7%97%D7%9C%D7%A7%D7%99%D7%A7%D7%99%D7%9D" target="_blank" rel="noopener" style="color:var(--primary);font-size:0.8rem;" data-en="🔗 Mayim4u (+ Mesh Bundle) ↗" data-he="🔗 מים4יו (מארז כולל סנן רשת) ↗">🔗 Mayim4u (+ Mesh Bundle) ↗</a>
+              </td>
+              <td data-en="• 76%–85% less scale on boiler &amp; appliance heaters. • 0% change to drinking water or shower glass spots." data-he="• 76%–85% הפחתת אבנית בדוד ובמכונת הכביסה. • 0% השפעה על טיהור מי שתייה או כתמי מקלחון."></td>
+              <td data-en="• Price: ₪890–₪1,190. • Lasts: 10 years. • Refills: ₪0 (no filters to replace)." data-he="• מחיר: 890–1,190 ש״ח. • מחזיק: 10 שנים. • חלפים: 0 ש״ח (אין מה להחליף)."></td>
+              <td data-en="• Nyga Coupon: 5SPECIAL (5% off). • ShoppingIL (Nov 9, in 18 days): ~10–15% off." data-he="• קוד קופון בניגא: 5SPECIAL (5% הנחה). • מבצעי ShoppingIL (9.11, בעוד 18 יום): 10%–15% הנחה."></td>
+            </tr>
+            <tr>
+              <td>
+                <strong data-en="2. Amiad Washable Stainless Mesh (Main Pipe)" data-he="2. סנן רשת נירוסטה רחיץ עמיעד (לשעון הראשי)">2. Amiad Washable Stainless Mesh (Main Pipe)</strong><br>
+                <a href="https://ksp.co.il/shop/item/498893" target="_blank" rel="noopener" style="color:var(--primary);font-weight:600;" data-en="🔗 KSP Water Filters ↗" data-he="🔗 לרכישה באתר KSP ↗">🔗 KSP Water Filters ↗</a><br>
+                <a href="https://www.filteroutlet.co.il" target="_blank" rel="noopener" style="color:var(--primary);font-size:0.8rem;" data-en="🔗 Filter Outlet ↗" data-he="🔗 חנות פילטר אאוטלט ↗">🔗 Filter Outlet ↗</a>
+              </td>
+              <td data-en="• 95%+ blocking of coarse pipe rust and sand. • Protects taps from clogging." data-he="• מעל 95% עצירה של חול, אבנים וחלודה מהצנרת העירונית. • שומר על הברזים מסתימות."></td>
+              <td data-en="• Price: ₪240–₪390. • Lasts: 7–10 years. • Refills: ₪0 (just rinse the metal mesh every 6 mos)." data-he="• מחיר: 240–390 ש״ח. • מחזיק: 7–10 שנים. • חלפים: 0 ש״ח (רק שוטפים את רשת הנירוסטה במים כל חצי שנה)."></td>
+              <td data-en="• KSP Coupon: BOOLKSP + HitechZone / KSP Telegram link (5–12% off)." data-he="• קוד קופון ב-KSP: הקוד BOOLKSP או כניסה דרך מועדון הייטקזון / טלגרם KSP."></td>
+            </tr>
+            <tr>
+              <td>
+                <strong data-en="3. Under-Sink Carbon / Hard-Water Filter (NSF 53 / F-701R)" data-he="3. סנן תת-כיורי במטבח (Everpure NSF 53 או F-701R הבריטי)">3. Under-Sink Carbon / Hard-Water Filter (NSF 53 / F-701R)</strong><br>
+                <a href="https://www.amazon.com/dp/B0002MSVDE" target="_blank" rel="noopener" style="color:var(--primary);font-weight:600;" data-en="🔗 Amazon: Everpure H-104 Filter ↗" data-he="🔗 אמזון: סנן Everpure H-104 ↗">🔗 Amazon: Everpure H-104 Filter ↗</a><br>
+                <a href="https://idgu.co.il/index.php?route=product/search&amp;search=F701R" target="_blank" rel="noopener" style="color:var(--primary);font-size:0.8rem;" data-en="🔗 IDGU: InSinkErator UK F-701R Twin-Pack ↗" data-he="🔗 יבואן IDGU: זוג סנני InSinkErator F-701R (דגם בריטי למים קשים) ↗">🔗 IDGU: InSinkErator UK F-701R Twin-Pack ↗</a>
+              </td>
+              <td data-en="• 95%–99% removal of chlorine, bad taste, lead &amp; cysts. • UK model F-701R (unlike US F-1000) also includes scale-reducing resin for 230V hot tanks." data-he="• 95%–99% ניקוי כלור, טעמי לוואי, עופרת וטפילים. • הדגם הבריטי F-701R (להבדיל מ-F-1000 האמריקאי) כולל גם שרף מונע אבנית לדוד הרותח."></td>
+              <td data-en="• Cold tap: ₪450–₪950 (~₪220/yr refill). • Hot/cold 230V bar via IDGU: ₪2,800+; F-701R rated 454L (replace every 6 mos)." data-he="• ברז קר: 450–950 ש״ח (~220 ש״ח לשנה). • מערכת חם/קר 230V ב-IDGU: מ-2,800 ש״ח; סנן F-701R מספיק ל-454 ליטר (החלפה כל חצי שנה)."></td>
+              <td data-en="• Amazon Tax Tip: Orders under $75 pay 0% Israeli VAT (saves 18%). • IDGU sells genuine UK 230V bars &amp; F-701R twin-packs ~40–50% below local retail." data-he="• פטור ממס באמזון: הזמנה מתחת ל-$75 פטורה ממע״מ (18%). • באתר IDGU זוג סנני F-701R ומערכות 230V נמכרים בכ-40%–50% פחות מהיבואן הרשמי."></td>
+            </tr>
+            <tr>
+              <td>
+                <strong data-en="4. Shower Glass Water Repellent + Shower Filter" data-he="4. ציפוי דוחה מים למקלחון + סנן כלור למקלחת">4. Shower Glass Water Repellent + Shower Filter</strong><br>
+                <a href="https://www.amazon.com/dp/B01DXKZ7EM" target="_blank" rel="noopener" style="color:var(--primary);font-weight:600;" data-en="🔗 Amazon: Rain-X Shower Glass Coating ↗" data-he="🔗 אמזון: ציפוי למקלחון Rain-X ↗">🔗 Amazon: Rain-X Shower Glass Coating ↗</a><br>
+                <a href="https://www.amazon.com/dp/B01MUBU0YC" target="_blank" rel="noopener" style="color:var(--primary);font-size:0.8rem;" data-en="🔗 Amazon: AquaBliss SF100 Shower Filter ↗" data-he="🔗 אמזון: סנן כלור למקלחת AquaBliss ↗">🔗 Amazon: AquaBliss SF100 Shower Filter ↗</a>
+              </td>
+              <td data-en="• Coating: 80%–90% fewer white spots on shower glass. • Shower filter: 75% less chlorine smell on skin/hair." data-he="• ציפוי לזכוכית: 80%–90% פחות כתמי אבנית וניגוב במקלחון. • סנן למקלחת: כ-75% פחות ריח כלור על העור והשיער."></td>
+              <td data-en="• Price: Rain-X ~₪38 (or 2-year Nano kit ~₪220); AquaBliss ~₪135. • Refills: Shower cartridge ~₪45 every 6 mos." data-he="• מחיר: Rain-X בכ-38 ש״ח (או ערכת ננו ל-2–3 שנים ב-220 ש״ח); סנן מקלחת ב-135 ש״ח. • חלפים: מחסנית מקלחת ב-45 ש״ח כל חצי שנה."></td>
+              <td data-en="• Check the green $3–$5 Clip Coupon box on the Amazon product page + 0% VAT under $75." data-he="• סמנו את קופון ההנחה הירוק ($3–$5) בעמוד המוצר באמזון + 0% מע״מ מתחת ל-$75."></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- STEP 7: DESALINATED WATER CONTAMINATION / SEPT 2026 ALGAE SHUTDOWN INCIDENT -->
+    <div class="section-title">
+      <span data-en="🌊 7. Recent Desalinated Water Incidents in Israel: Would These Filters Protect You?" data-he="🌊 7. מקרי הזיהום והשבתת המים המותפלים בישראל: האם הסננים הביתיים עוזרים?">🌊 7. Recent Desalinated Water Incidents in Israel: Would These Filters Protect You?</span>
+      <button type="button" class="card-listen-btn" onclick="playSingleBox(6)" data-en="🔊 Listen to Section 7 (~13s)" data-he="🔊 האזנה לשלב 7 (~13 שנ׳)">🔊 Listen to Section 7 (~13s)</button>
+    </div>
+    <section class="panel-card" id="stepBox7" data-step-title="7. Desalinated Water Incident Analysis"
+      data-step-candid-en="In September 2026, an algae wave forced Israel to shut down five out of six desalination plants and switch cities to hard well water. Main pipe filters protect your boiler from the sudden rust and scale surge, while an under-sink carbon filter protects your drinking water from extra chlorine and bad taste."
+      data-step-exec-en="When desalination plants shut down or have quality issues, municipal supply switches to hard well water. Main-line mesh and KalyxX block the resulting rust and scale spike, while an under-sink NSF 53 carbon filter protects drinking water."
+      data-step-candid-he="בספטמבר 2026 נחיל אצות בים אילץ להשבית חמישה מתוך שישה מתקני התפלה בישראל ולהעביר את הערים למי בארות קשים. הסננים על השעון הראשי שומרים על הדוד מגל החלודה והאבנית שמגיע ממי הבארות, בעוד שסנן הפחם מתחת לכיור במטבח שומר על מי השתייה מתגבור הכלור וטעמי הלוואי."
+      data-step-exec-he="כשמתקני התפלה מושבתים או חווים תקלה, אספקת המים עוברת למי בארות קשים. סנן רשת וקליקס בולמים את מכת החלודה והאבנית בצנרת, וסנן פחם בתקן NSF 53 במטבח מגן על מי השתייה.">
+
+      <div style="background:var(--card-alt);border:1px solid var(--border);border-radius:12px;padding:14px;margin-block-end:14px;">
+        <h3 style="margin-block:0 4px;font-size:0.95rem;" data-en="🚨 What Happened in Israel (In Simple Words)" data-he="🚨 מה קרה בפועל במים המותפלים בישראל (בשפה פשוטה)">🚨 What Happened in Israel (In Simple Words)</h3>
+        <p style="margin-block:0;font-size:0.86rem;color:var(--muted);" data-en="• Sept 2026 Algae Shutdown: Huge algae clouds in the sea forced Israel to shut down 5 out of 6 desalination plants at once. Cities like Ramat Gan were switched to well water — causing an immediate jump in scale, pipe rust, and added chlorine. • Sorek A Incident (2019): The plant supplied overly salty water after falsifying lab checks." data-he="• ספטמבר 2026 (השבתת 5 מ-6 מתקני ההתפלה): נחיל אצות ענק בים אילץ לסגור 5 מתוך 6 מתקני התפלה במקביל. מקורות העבירה את גוש דן למי בארות, מעבר שמקפיץ מיד את כמות האבנית, משחרר גל חלודה מהצנרת ומחייב תגבור כלור. • פרשת שורק א׳ (2019): המתקן הזרים מים עם מליחות חריגה לאחר דיווחי מעבדה כוזבים."></p>
+      </div>
+
+      <div class="cards-grid">
+        <article class="cap-card">
+          <span class="badge badge-amber" data-en="Main Pipe (Mesh + KalyxX)" data-he="בשעון הראשי (רשת נירוסטה + KalyxX)">Main Pipe (Mesh + KalyxX)</span>
+          <h3 data-en="Stops the Rust &amp; Scale Surge (Not Bacteria)" data-he="עוצר את מכת החלודה והאבנית (אבל לא חיידקים)">Stops the Rust &amp; Scale Surge (Not Bacteria)</h3>
+          <p data-en="• Blocks the brown rust shaken loose when water sources switch. • Protects your boiler from the 3x jump in scale from well water. • Gives 0% protection against bacteria or chemical contamination." data-he="• רשת הנירוסטה עוצרת את גל החלודה והחול שמשתחרר בצנרת העירונית. • ה-KalyxX מגן על הדוד מזינוק האבנית החד של מי הבארות. • נותן 0% הגנה מחיידקים או מזיהום כימי במים."></p>
+        </article>
+
+        <article class="cap-card">
+          <span class="badge badge-green" data-en="Kitchen Sink (NSF 53 Carbon Filter)" data-he="מתחת לכיור המטבח (סנן פחם NSF 53)">Kitchen Sink (NSF 53 Carbon Filter)</span>
+          <h3 data-en="Cleans 95%–99% of Chlorine, Odors &amp; Lead" data-he="מנקה 95%–99% מתגבור הכלור, טעמי הלוואי והמתכות">Cleans 95%–99% of Chlorine, Odors &amp; Lead</h3>
+          <p data-en="• Removes the heavy chlorine dose added during water alerts. • Filters out earthy algae smells, lead, and microscopic parasites. • Best everyday health shield for drinking water." data-he="• מסלק את עודפי הכלור שמזרימים למים בזמן תקלות. • עוצר טעמי לוואי של אצות, עופרת מצנרת ישנה וטפילים. • שכבת ההגנה החשובה ביותר למי השתייה ביום-יום."></p>
+        </article>
+
+        <article class="cap-card">
+          <span class="badge badge-red" data-en="Extreme Alerts (Salty Water or Boil Order)" data-he="מקרי קצה (מליחות חריגה או הוראת הרתחה)">Extreme Alerts (Salty Water or Boil Order)</span>
+          <h3 data-en="Only Reverse Osmosis + UV (or Boiling) Works" data-he="רק אוסמוזה הפוכה עם נורת UV (או הרתחה בקומקום)">Only Reverse Osmosis + UV (or Boiling) Works</h3>
+          <p data-en="• Regular carbon filters cannot remove dissolved salt (like Sorek A) or tiny viruses. • Only Reverse Osmosis removes salt, and only a UV lamp or boiling water for 2 minutes kills viruses." data-he="• סנן פחם רגיל לא יכול להוציא מלח מומס (כמו בשורק א׳) או וירוסים. • רק אוסמוזה הפוכה מוציאה מלחים, ורק נורת UV או הרתחה של 2 דקות בקומקום משמידה וירוסים וחיידקים."></p>
+        </article>
+      </div>
+    </section>
+
+    <div class="focus-bottom-nav" id="focusBottomNav">
+      <button type="button" class="btn-action" onclick="stepView(-1)" data-en="◀ Previous Section" data-he="◀ השלב הקודם">◀ Previous Section</button>
+      <span id="focusBottomLabel" style="font-size:0.84rem;font-weight:700;color:var(--muted);" data-en="Section 1 of 7 • Use Left/Right arrows or buttons to step" data-he="שלב 1 מתוך 7 • דפדפו עם החצים או הכפתורים">Section 1 of 7 • Use Left/Right arrows or buttons to step</span>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <button type="button" class="btn-action" onclick="toggleFocusMode()" data-en="👁 Toggle Full-Page View" data-he="👁 הצג/הסתר את כל הדף בבת אחת">👁 Toggle Full-Page View</button>
+        <button type="button" class="btn-action primary" onclick="stepView(1)" data-en="Next Section ▶" data-he="השלב הבא ▶">Next Section ▶</button>
+      </div>
+    </div>
+
+    <footer class="footer-bar" id="eladb-provenance-footer">
+      <span><span data-en="Compiled by " data-he="רוכז ואומת על ידי ">Compiled by </span><strong><a href="#" target="_blank" rel="noopener" style="color: var(--primary); text-decoration: underline;">Elad Ben-David</a></strong><span data-en=" • Synthesized from Israeli Standard 1505, NSF/WRAS specs &amp; anonymized TLV Googler insights." data-he=" • מבוסס על תו תקן 1505, תקני NSF/WRAS ולקחי קהילת עובדי גוגל ישראל (באנונימיות מלאה)."> • Synthesized from Israeli Standard 1505, NSF/WRAS specs &amp; anonymized TLV Googler insights.</span></span>
+      <span style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+        <button type="button" class="btn-action" aria-haspopup="dialog" onclick="openCommunityFormModal()" data-en="📝 Add Question / Vendor Tip" data-he="📝 הוספת שאלה / ניסיון מהשטח">📝 Add Question / Vendor Tip</button>
+        <span><span data-en="Spotted an outdated detail, broken link, or missing tip? Email " data-he="מצאתם פרט לא מעודכן, לינק שבור או בדיקת מעבדה חסרה? שלחו מייל ל-">Spotted an outdated detail, broken link, or missing tip? Email </span><a href="mailto:elad2109@gmail.com?subject=Update%20%2F%20Tip%20for%20go%2Fil-water-guide" style="color: var(--primary); text-decoration: underline; font-weight: 600;">elad2109@gmail.com</a></span>
+      </span>
+    </footer>
+  </main>
+
+  <div id="communityFormModal" role="dialog" aria-modal="true" aria-labelledby="commFormModalTitle">
+    <div class="comm-modal-dialog">
+      <div class="comm-modal-header">
+        <div>
+          <h2 id="commFormModalTitle" style="margin:0;font-size:1.15rem;" data-en="📝 Add a Question, Vendor Claim, or Real-World Home Tip" data-he="📝 הוספת שאלה חדשה, בדיקת מותג או ניסיון אמיתי מהדירה">📝 Add a Question, Vendor Claim, or Real-World Home Tip</h2>
+          <p style="margin-block:6px 0;font-size:0.81rem;color:var(--muted);" data-en="🔒 טופס משוב אנונימי ועצמאי לשיפור המדריךer published on this page. Every submission is fact-checked against manufacturer specs &amp; official standards (IS 1505, NSF, WRAS) so everyone benefits instead of losing insights in long email threads." data-he="🔒 טופס Google Forms פנים-ארגוני פרטי: שמות או כתובות מייל לעולם לא מפורסמים בעמוד. כל פנייה עוברת בדיקת עובדות מול מפרטי יצרן ותקנים רשמיים (ת״י 1505, NSF, WRAS) ומתווספת למאגר לטובת חיפושים עתידיים של כלל העובדים."></p>
+        </div>
+        <button type="button" class="comm-close-btn" id="commFormCloseBtn" onclick="closeCommunityFormModal()" aria-label="Close community form"><span aria-hidden="true">✕</span></button>
+      </div>
+
+      <form id="communityQuickForm" onsubmit="event.preventDefault(); submitCommunityPreFilledForm();">
+        <div class="comm-field-group">
+          <label class="comm-label" for="commTypeSelect" data-en="1. What would you like to add or check?" data-he="1. מה תרצו להוסיף או שנבדוק עבור המדריך?">1. What would you like to add or check?</label>
+          <select id="commTypeSelect" class="comm-select">
+            <option value="בדיקת עובדות על מוצר או ספק / Vendor or Model Fact-Check" data-en="🔬 Vendor or Model Fact-Check (e.g. UK F-701R vs. US F-1000)" data-he="🔬 בדיקת עובדות על מוצר או דגם (למשל F-701R הבריטי מול F-1000)">🔬 Vendor or Model Fact-Check (e.g. UK F-701R vs. US F-1000)</option>
+            <option value="ניסיון אמיתי מהדירה שלי / Real-World Home Setup Tip" data-en="🏠 Real-World Home Setup Tip (what worked or failed after 1-2+ years)" data-he="🏠 ניסיון אמיתי מהדירה שלי (מה עבד או נכשל אחרי שנה-שנתיים)">🏠 Real-World Home Setup Tip (what worked or failed after 1-2+ years)</option>
+            <option value="שאלה חדשה שלא מופיעה במדריך / New Question Missing from Guide" data-en="❓ New Question Missing from This Guide" data-he="❓ שאלה חדשה שעדיין לא מופיעה במדריך">❓ New Question Missing from This Guide</option>
+            <option value="רעיון לשיתוף פעולה או מיזם ידע משותף / Idea for Shared Knowledge Hub" data-en="💡 Idea for Collaborating or Building Another Shared Guide" data-he="💡 רעיון לשיתוף פעולה או לבניית מאגר ידע משותף נוסף">💡 Idea for Collaborating or Building Another Shared Guide</option>
+          </select>
+        </div>
+
+        <div class="comm-field-group">
+          <label class="comm-label" for="commTopicInput" data-en="2. Product, Model, or Topic *" data-he="2. שם המוצר, הדגם או הנושא *">2. Product, Model, or Topic *</label>
+          <input type="text" id="commTopicInput" class="comm-input" required oninput="autoBiDiInput(this)" placeholder="e.g. InSinkErator UK F-701R via IDGU, Culligan, BWT..." data-placeholder-en="e.g. InSinkErator UK F-701R via IDGU, Culligan, BWT..." data-placeholder-he="למשל: סנן F-701R באתר IDGU, קוליגן, אוסמוזה, מקטין לחץ...">
+        </div>
+
+        <div class="comm-field-group">
+          <label class="comm-label" for="commDetailsInput" data-en="3. Claim, Real-World Experience, or Question to Verify *" data-he="3. מה שמעתם, בדקתם בדירה או תרצו שנאמת מול התקנים? *">3. Claim, Real-World Experience, or Question to Verify *</label>
+          <textarea id="commDetailsInput" class="comm-textarea" required oninput="autoBiDiInput(this)" placeholder="Share what a plumber/vendor promised, how long you used a setup, where it is sold, or what question is missing..." data-placeholder-en="Share what a plumber/vendor promised, how long you used a setup, where it is sold, or what question is missing..." data-placeholder-he="שתפו מה הבטיח המתקין/היבואן, כמה זמן המערכת עובדת אצלכם, איפה קניתם, או איזו שאלה חסרה..."></textarea>
+        </div>
+
+        <div class="comm-field-group">
+          <label class="comm-label" for="commEmailInput" data-en="4. Optional: Your @google.com Email (only if you want a reply once updated; never published)" data-he="4. אופציונלי: מייל @google.com לעדכון חוזר כשהתשובה תעלה לדף (לעולם לא מפורסם)">4. Optional: Your @google.com Email (only if you want a reply once updated; never published)</label>
+          <input type="email" id="commEmailInput" class="comm-input" dir="ltr" placeholder="optional: your-ldap@google.com" data-placeholder-en="optional: your-ldap@google.com" data-placeholder-he="אופציונלי: your-ldap@google.com">
+        </div>
+
+        <p id="commFormStatusMsg" aria-live="polite" aria-atomic="true" style="margin-block:0 10px;font-size:0.82rem;font-weight:600;color:var(--success-text);display:none;"></p>
+
+        <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
+          <button type="submit" class="btn-action primary" data-en="🚀 Open Pre-Filled Google Form &amp; Submit (1 Click) ↗" data-he="🚀 פתיחה בטופס Google Forms מוכן לשליחה בלחיצה ↗">🚀 Open Pre-Filled Google Form &amp; Submit (1 Click) ↗</button>
+          <button type="button" id="toggleEmbedFormBtn" class="btn-action" aria-pressed="false" onclick="toggleEmbeddedGForm()" data-en="📋 Or Fill Embedded Google Form Here" data-he="📋 או מילוי הטופס המוטמע ישירות בחלון זה">📋 Or Fill Embedded Google Form Here</button>
+          <button type="button" class="btn-action" onclick="closeCommunityFormModal()" data-en="Cancel" data-he="סגירה">Cancel</button>
+        </div>
+      </form>
+
+      <div id="commEmbeddedWrap" class="comm-iframe-wrap">
+        <iframe id="commEmbeddedIframe" title="Google Israel Water Guide Community Form" width="100%" height="520" style="border:0;display:block;"></iframe>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    var currentLang = 'en';
+    var currentGoal = 'balanced';
+    var currentSpace = 'compact';
+    var currentPersona = 'candid';
+    var isNarrating = false;
+    var singleBoxMode = false;
+    var activeBoxIdx = 0;
+    var captionsEnabled = false;
+    var sentenceTimer = null;
+    var keepAliveTimer = null;
+
+    var CONCIERGE_ANSWERS = {
+      shower: {
+        en: "No legal main-line filter in Israel (neither Siliphos nor IPS KalyxX) removes dissolved calcium or magnesium ions from the water. When shower droplets sit on the glass and evaporate 100%, all dissolved minerals remain behind as white spots. The only real solution for shower glass is applying a covalent hydrophobic silica nano-coating (EnduroShield or Nano Glass GL-1, ~₪220 for 2-3 years) + a 5-second squeegee swipe.",
+        he: "אף מסנן דירתי חוקי בישראל (לא סיליפוס ולא IPS KalyxX) לא מוציא את יוני הסידן והמגנזיום מהמים. כשטיפות המים במקלחת ניתזות על הזכוכית ומתאדות ב-100%, כל המינרלים המומסים נשארים על הזכוכית ככתם לבן. הפתרון האמיתי היחיד לזכוכית המקלחון הוא ציפוי ננו דו-שלבי (כגון EnduroShield או Nano Glass GL-1 בכ-220 ש״ח ל-2-3 שנים) בשילוב גריפה של 5 שניות."
+      },
+      siliphos: {
+        en: "Critique of the Thread Panic: In the internal thread, people feared Siliphos is 'toxic chemicals'. Scientifically, IS 1505 / NSF-60 Siliphos adds ~2-4 mg/L of phosphorus (<0.3% of the 1,200 mg you eat daily in food). Salesmen exploit that fear to sell ₪3,500 magnets! However, from an engineering & TCO standpoint, IPS KalyxX on the main line (or Siliphos on the boiler inlet only) still wins: cheap Siliphos housings dose unevenly as beads erode and cost ~₪250/yr in refills.",
+        he: "ביקורת על הבהלה בשרשור: יש הנבהלים שסיליפוס הוא 'כימיקל מסוכן'. מדעית, סיליפוס בתקן 1505 / NSF-60 מוסיף רק כ-2–4 מ״ג זרחן לליטר (פחות מ-0.3% מ-1,200 מ״ג זרחן שאוכלים ביום במזון רגיל), ואנשי מכירות מנצלים את הפחד הזה כדי למכור מגנטים ב-3,500 ש״ח. עם זאת, הנדסית וכלכלית עדיף IPS KalyxX בקו הראשי (או סיליפוס רק לדוד): בבתי סנן זולים המינון אינו אחיד כשהכדוריות נשחקות, וחבל לשלם כ-250 ש״ח בשנה על מילויים."
+      },
+      tipatech: {
+        en: "In our TLV Googlers thread, engineers flagged 4 issues with TipaTech (Lotus Hybrid): (1) Marketing claims '99% scale prevention' while fine print says kettle scale is 'normal pH balance'; (2) 'Unit tests without E2E' (lab links test a single metal or industrial model T-18 instead of full IS 1505 certification on Lotus Hybrid); (3) The founder's earlier 'Hardless' filter now carries red cancer warnings on their own site; (4) High cost (₪2,500-₪4,000+).",
+        he: "בבדיקות צרכניות עלו 4 נורות אזהרה לגבי טיפה-טק (לוטוס היברידי): (1) הבטחה ל-'99% מניעת אבנית' לצד הערת שוליים שאבנית בקומקום היא 'איזון pH תקין'; (2) 'יוניט-טסט בלי E2E' (קישורים לתעודות של דגם T-18 או מתכת בודדת במקום תו תקן 1505 מלא לדגם הנמכר); (3) פרשת ה'הרדלס' מהעבר שמופיע כיום באתרם עם אזהרות סרטן אדומות; (4) מחיר גבוה מאוד."
+      },
+      undersink: {
+        en: "Important Model Split (US F-1000 vs. UK F-701R): Never install the US InSinkErator filter (F-1000/2000), which is carbon-only with ZERO scale protection and burns out a 98°C boiling tank! By contrast, the UK hard-water model F-701R (WRAS certified, sold in twin-packs via IDGU for 230V EU/UK NeoTank systems) DOES include ion-exchange scale resin + carbon + lead reduction (rated 454L / 6 months; works best paired with main-line KalyxX or Siliphos + micron mesh, plus cabinet ventilation holes).",
+        he: "אבחנה קריטית בין הדגמים (US F-1000 מול UK F-701R): הימנעו מהפילטר האמריקאי (F-1000/2000) שהוא פחם בלבד עם 0% הגנת אבנית וישרוף את הדוד הרותח. לעומתו, הדגם הבריטי למים קשים F-701R (בעל תקן WRAS, נמכר בזוגות דרך IDGU למערכות 230V אירופאיות) כן כולל שרף חילוף יונים נגד אבנית לצד סינון כלור ועופרת (קיבולת 454 ליטר / החלפה כל חצי שנה; עובד מצוין בשילוב קליקס או סיליפוס+מיקרון בשעון הראשי וחורי אוורור בארון)."
+      },
+      desalination: {
+        en: "In Sept 2026, a massive microalgae bloom from the Nile Delta forced Israel to shut down 5 of its 6 desalination plants (Ashkelon, Ashdod, Sorek A/B, Palmachim), switching cities to hard aquifer/well water (and in 2019 Sorek A had a chloride/salinity scandal). Scale inhibitors (KalyxX/Siliphos) give 0% protection against toxins/bacteria, though they protect boilers from the sudden hardness spike when Mekorot switches to well water. To protect drinking water health, you need a 0.5μm NSF-53 activated carbon block (removes 95-99% of chlorine, algal odor/toxins, lead & cysts) or Reverse Osmosis + UV.",
+        he: "בספטמבר 2026 נחיל אצות מיקרוסקופיות מדלתת הנילוס הוביל להשבתה חסרת תקדים של 5 מתוך 6 מתקני ההתפלה בישראל (אשקלון, אשדוד, שורק א׳ ו-ב׳ ופלמחים) ולמעבר למי קידוחים קשים (וב-2019 נחשפה פרשת מליחות וכלורידים בשורק א׳). מונעי אבנית (קליקס/סיליפוס) נותנים 0% הגנה מזיהום ביולוגי או כימי, אך מגינים על הדוד מקפיצת האבנית החדה במעבר למי בארות. להגנה בריאותית אמיתית במי השתייה נדרש סנן פחם פעיל דחוס 0.5 מיקרון בתקן NSF-53 (מסלק 95%-99% מכלור, רעלני אצות, עופרת וטפילים) או אוסמוזה הפוכה עם נורת UV."
+      },
+      verify: {
+        en: "We verify every claim against 3 independent layers: (1) Physical/chemical laws (evaporation vs. crystallization, Israeli brine discharge ban); (2) Official full-system certifications (SII Israeli Standard 1505 / 5452, WRAS, and NSF/ANSI 42/53/61/372, rejecting partial vendor-paid metal tests); and (3) Multi-year owner failure reports from our community. Click Add Question / Tip to submit a model or experience via our private Google Form, or copy the prompt in Section 5.",
+        he: "אנחנו מאמתים כל ממצא מול 3 שכבות בלתי-תלויות: (1) חוקי פיזיקה וכימיה (אידוי מול התגבשות, ואיסור הזרמת תמלחת לביוב בישראל); (2) תקינה רשמית למערכת השלמה (תו תקן ישראלי 1505, תקן WRAS הבריטי ו-NSF/ANSI 42/53/61/372, תוך פסילת בדיקות מעבדה חלקיות מטעם היצרן); ו-(3) דיווחי אמת ארוכי-טווח של עובדי גוגל. לחצו על הוספת שאלה / ניסיון מהשטח כדי לשלוח ממצא בטופס המובנה בדף, או העתיקו את הפרומפט בשלב 5."
+      }
+    };
+
+    function autoBiDiInput(el) {
+      if (!el) return;
+      var val = String(el.value || '');
+      var isHe = /^(?:\s*\(recommended\)\s*|[\s\d\p{P}\p{S}])*[\u0590-\u05FF]/iu.test(val);
+      if (val.trim().length === 0) {
+        el.dir = (currentLang === 'he') ? 'rtl' : 'ltr';
+      } else {
+        el.dir = isHe ? 'rtl' : 'ltr';
+      }
+    }
+
+    function askConcierge(key) {
+      var item = CONCIERGE_ANSWERS[key] || CONCIERGE_ANSWERS.verify;
+      var bodyEl = document.getElementById('replyBody');
+      if (bodyEl) {
+        bodyEl.textContent = (currentLang === 'he') ? item.he : item.en;
+        bodyEl.setAttribute('data-en', item.en);
+        bodyEl.setAttribute('data-he', item.he);
+      }
+    }
+
+    function handleFreeQuestion() {
+      var inp = document.getElementById('conciergeInput');
+      var q = String(inp ? inp.value : '').toLowerCase();
+      if (!q) {
+        askConcierge('verify');
+        return;
+      }
+      if (/מקלח|זכוכית|ננו|מגב|rain|shower|glass|nano|enduro/.test(q)) askConcierge('shower');
+      else if (/טיפה|לוטוס|הרדלס|ברוך|tipa|lotus|hardless/.test(q)) askConcierge('tipatech');
+      else if (/כיור|ניגא|קוקר|אוסמוזה|תמי|insink|quooker|idgu|ro|bar|701|f701|f-701|1000/.test(q)) askConcierge('undersink');
+      else if (/סיליפוס|עמיעד|ספיר|הארדי|קליקס|siliphos|amiad|kalyxx|1505|לחץ/.test(q)) askConcierge('siliphos');
+      else askConcierge('verify');
+    }
+
+    function filterPageLive(query) {
+      var q = String(query || '').toLowerCase().trim();
+      var cards = document.querySelectorAll('#qaList .qa-card');
+      for (var i = 0; i < cards.length; i++) {
+        var txt = (cards[i].textContent || '').toLowerCase();
+        cards[i].style.display = (!q || txt.indexOf(q) !== -1) ? '' : 'none';
+      }
+    }
+
+    function updateCalculator() {
+      var hwCostEl = document.getElementById('calcHardwareCost');
+      var hwTitleEl = document.getElementById('calcHardwareTitle');
+      var hwDescEl = document.getElementById('calcHardwareDesc');
+      var totEl = document.getElementById('calcTotal3Yr');
+      var maintEl = document.getElementById('calcMaintTitle');
+      var failEl = document.getElementById('calcFailureNote');
+
+      var isNarrow = (currentSpace === 'compact');
+      if (currentGoal === 'budget') {
+        hwCostEl.textContent = '₪280';
+        var tEn = 'Point-of-Use Siliphos (Boiler & Washer Inlets Only, IS 1505)';
+        var tHe = 'סנן סיליפוס נקודתי (רק לכניסת דוד שמש ומכונת כביסה, ת״י 1505)';
+        var dEn = 'Leaves kitchen drinking water 100% untouched on the main line while protecting heating elements.';
+        var dHe = 'משאיר את מי השתייה במטבח נקיים לחלוטין מסיליפוס, ומגן נקודתית על גוף החימום בדוד ובכביסה.';
+        hwTitleEl.setAttribute('data-en', tEn); hwTitleEl.setAttribute('data-he', tHe);
+        hwDescEl.setAttribute('data-en', dEn); hwDescEl.setAttribute('data-he', dHe);
+        hwTitleEl.textContent = (currentLang === 'he') ? tHe : tEn;
+        hwDescEl.textContent = (currentLang === 'he') ? dHe : dEn;
+        totEl.textContent = (currentLang === 'he') ? '₪850 (₪24 לחודש)' : '₪850 (₪24/mo)';
+        var mEn = 'DIY Install + ₪350 Siliphos Refills over 3 Years';
+        var mHe = 'התקנה עצמית + כ-350 ש״ח מילויי סיליפוס ל-3 שנים';
+        var fEn = '#1 Failure Mode: Forgetting the 6-month Siliphos refill causes beads to dissolve completely and scale protection drops to zero.';
+        var fHe = 'נקודת כשל מס׳ 1: שכחת מילוי כדוריות סיליפוס כל חצי שנה גורמת להמסה מלאה של החומר ואובדן ההגנה על הדוד.';
+        maintEl.setAttribute('data-en', mEn); maintEl.setAttribute('data-he', mHe);
+        failEl.setAttribute('data-en', fEn); failEl.setAttribute('data-he', fHe);
+        maintEl.textContent = (currentLang === 'he') ? mHe : mEn;
+        failEl.textContent = (currentLang === 'he') ? fHe : fEn;
+      } else if (currentGoal === 'balanced') {
+        hwCostEl.textContent = '₪1,530';
+        var tEn2 = isNarrow ? 'IPS KalyxX Active 3/4" (25cm) + Compact 100μm Stainless Mesh' : 'IPS KalyxX Active 3/4" + Standard 10" 100μm Washable Mesh';
+        var tHe2 = isNarrow ? 'מערכת IPS KalyxX Active 3/4 (25 ס״מ) + סנן רשת קומפקטי 100 מיקרון' : 'מערכת IPS KalyxX Active 3/4 + בית סנן רשת נירוסטה 10 אינץ׳';
+        var dEn2 = '76-85% scale reduction via TGP galvanic turbulence (NSF certified), zero Siliphos in drinking water, zero cartridge refills for 10 years.';
+        var dHe2 = 'מפחית 76%-85% מהתגבשות האבנית בטכנולוגיה גלוונית (תקן NSF), אפס סיליפוס במי השתייה, ואפס החלפת מחסניות ל-10 שנים.';
+        hwTitleEl.setAttribute('data-en', tEn2); hwTitleEl.setAttribute('data-he', tHe2);
+        hwDescEl.setAttribute('data-en', dEn2); hwDescEl.setAttribute('data-he', dHe2);
+        hwTitleEl.textContent = (currentLang === 'he') ? tHe2 : tEn2;
+        hwDescEl.textContent = (currentLang === 'he') ? dHe2 : dEn2;
+        totEl.textContent = (currentLang === 'he') ? '₪2,100 (₪18 לחודש ל-10 שנים)' : '₪2,100 (₪18/mo over 10y)';
+        var mEn2 = 'Includes Plumber Install (₪350) + ₪0 Refills for 10 Years';
+        var mHe2 = 'כולל התקנת אינסטלטור (350 ש״ח) + 0 ש״ח מחסניות ל-10 שנים';
+        var fEn2 = '#1 Failure Mode: Always place the 100μm washable mesh before KalyxX so municipal sand/rust in Ramat Gan does not clog the turbine.';
+        var fHe2 = 'נקודת כשל מס׳ 1: חובה להתקין סנן רשת רחיץ (100 מיקרון) לפני ה-KalyxX כדי שחול וחלודה מצנרת עירונית לא יסתמו את האלקטרודות.';
+        maintEl.setAttribute('data-en', mEn2); maintEl.setAttribute('data-he', mHe2);
+        failEl.setAttribute('data-en', fEn2); failEl.setAttribute('data-he', fHe2);
+        maintEl.textContent = (currentLang === 'he') ? mHe2 : mEn2;
+        failEl.textContent = (currentLang === 'he') ? fHe2 : fEn2;
+      } else {
+        hwCostEl.textContent = '₪2,300';
+        var tEn3 = 'IPS KalyxX + 100μm Mesh + Under-Sink NSF 42/53 Carbon Block + Shower KDF Filter';
+        var tHe3 = 'מערכת KalyxX + סנן רשת + סנן פחם פעיל תת-כיורי (NSF 42/53) + סנן כלור למקלחת';
+        var dEn3 = 'Complete protection: chemical-free scale inhibition on main line, chlorine/lead removal at kitchen tap, and chlorine-free shower water.';
+        var dHe3 = 'מענה מלא לכל הדירה: מניעת אבנית ללא כימיקלים בקו הראשי, הוצאת כלור ומתכות כבדות בברז המטבח, ונטרול כלור במקלחת.';
+        hwTitleEl.setAttribute('data-en', tEn3); hwTitleEl.setAttribute('data-he', tHe3);
+        hwDescEl.setAttribute('data-en', dEn3); hwDescEl.setAttribute('data-he', dHe3);
+        hwTitleEl.textContent = (currentLang === 'he') ? tHe3 : tEn3;
+        hwDescEl.textContent = (currentLang === 'he') ? dHe3 : dEn3;
+        totEl.textContent = (currentLang === 'he') ? '₪3,150 (₪87 לחודש)' : '₪3,150 (₪87/mo)';
+        var mEn3 = 'Includes Install + Annual Kitchen Carbon & Shower Filter Refills';
+        var mHe3 = 'כולל התקנה + החלפה שנתית של סנן הפחם במטבח וסנן המקלחת';
+        var fEn3 = '#1 Failure Mode: Replace kitchen carbon block by liter capacity / 12 months so saturated carbon does not release trapped taste/odor.';
+        var fHe3 = 'נקודת כשל מס׳ 1: החליפו את סנן הפחם הפעיל במטבח בזמן (כל שנה) כדי שפחם רווי לא ישחרר חזרה טעמי לוואי.';
+        maintEl.setAttribute('data-en', mEn3); maintEl.setAttribute('data-he', mHe3);
+        failEl.setAttribute('data-en', fEn3); failEl.setAttribute('data-he', fHe3);
+        maintEl.textContent = (currentLang === 'he') ? mHe3 : mEn3;
+        failEl.textContent = (currentLang === 'he') ? fHe3 : fEn3;
+      }
+    }
+
+    function setCalcGoal(g) {
+      currentGoal = g;
+      document.getElementById('goalBalanced').setAttribute('aria-pressed', g === 'balanced' ? 'true' : 'false');
+      document.getElementById('goalBudget').setAttribute('aria-pressed', g === 'budget' ? 'true' : 'false');
+      document.getElementById('goalFull').setAttribute('aria-pressed', g === 'full' ? 'true' : 'false');
+      updateCalculator();
+    }
+
+    function setCalcSpace(s) {
+      currentSpace = s;
+      document.getElementById('spaceCompact').setAttribute('aria-pressed', s === 'compact' ? 'true' : 'false');
+      document.getElementById('spaceWide').setAttribute('aria-pressed', s === 'wide' ? 'true' : 'false');
+      updateCalculator();
+    }
+
+    function getStepBoxes() {
+      return Array.prototype.slice.call(document.querySelectorAll('[data-step-title]'));
+    }
+
+    function updateFocusBannerText() {
+      var boxes = getStepBoxes();
+      var isSingle = document.body.getAttribute('data-single-focus') === 'true';
+      var counterEl = document.getElementById('focusStepCounter');
+      var bottomEl = document.getElementById('focusBottomLabel');
+      var toggleBtn = document.getElementById('btnFocusModeToggle');
+      var idx = Math.max(0, Math.min(boxes.length - 1, activeBoxIdx));
+      if (counterEl) {
+        if (isSingle) {
+          counterEl.textContent = (currentLang === 'he')
+            ? ('שלב ' + (idx + 1) + ' מתוך ' + boxes.length + ' • מצב מיקוד שלב-אחר-שלב (ללא עומס בעיניים)')
+            : ('Step ' + (idx + 1) + ' of ' + boxes.length + ' • Step-by-Step Focus Mode (Zero Overload)');
+        } else {
+          counterEl.textContent = (currentLang === 'he')
+            ? ('תצוגת עמוד מלא (כל ' + boxes.length + ' החלקים פתוחים לגלילה)')
+            : ('Full-Page Scroll View (All ' + boxes.length + ' Sections Visible)');
+        }
+      }
+      if (bottomEl) {
+        bottomEl.textContent = (currentLang === 'he')
+          ? ('שלב ' + (idx + 1) + ' מתוך ' + boxes.length + ' • ניתן לדפדף עם החצים במקלדת')
+          : ('Section ' + (idx + 1) + ' of ' + boxes.length + ' • Use Left/Right keys or buttons');
+      }
+      if (toggleBtn) {
+        toggleBtn.setAttribute('aria-pressed', isSingle ? 'false' : 'true');
+        toggleBtn.textContent = (currentLang === 'he')
+          ? (isSingle ? '👁 הצג את כל 7 החלקים בעמוד אחד' : '🎯 חזור למצב מיקוד (שלב-אחר-שלב)')
+          : (isSingle ? '👁 Show All 7 Sections on 1 Page' : '🎯 Back to Step-by-Step Focus Mode');
+      }
+    }
+
+    function setActiveStep(idx, shouldScroll) {
+      var boxes = getStepBoxes();
+      if (!boxes.length) return;
+      activeBoxIdx = Math.max(0, Math.min(boxes.length - 1, idx));
+      for (var i = 0; i < boxes.length; i++) {
+        var b = boxes[i];
+        var prev = b.previousElementSibling;
+        if (i === activeBoxIdx) {
+          b.classList.add('step-active');
+          if (prev && prev.classList.contains('section-title')) {
+            prev.classList.add('step-active-title');
+          }
+        } else {
+          b.classList.remove('step-active');
+          if (prev && prev.classList.contains('section-title')) {
+            prev.classList.remove('step-active-title');
+          }
+        }
+      }
+      var pills = document.querySelectorAll('.step-pill-btn');
+      for (var p = 0; p < pills.length; p++) {
+        if (Number(pills[p].getAttribute('data-pill-idx')) === activeBoxIdx) {
+          pills[p].setAttribute('aria-current', 'step');
+        } else {
+          pills[p].removeAttribute('aria-current');
+        }
+      }
+      updateFocusBannerText();
+      if (shouldScroll) {
+        var targetEl = boxes[activeBoxIdx];
+        var prevTitle = targetEl ? targetEl.previousElementSibling : null;
+        var scrollNode = (prevTitle && prevTitle.classList.contains('section-title')) ? prevTitle : targetEl;
+        if (document.body.getAttribute('data-single-focus') === 'true') {
+          var navBar = document.getElementById('focusStepperBar');
+          if (navBar) navBar.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } else if (scrollNode) {
+          scrollNode.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }
+    }
+
+    function stepView(delta) {
+      var boxes = getStepBoxes();
+      var nextIdx = Math.max(0, Math.min(boxes.length - 1, activeBoxIdx + delta));
+      setActiveStep(nextIdx, true);
+    }
+
+    function toggleFocusMode() {
+      var isSingle = document.body.getAttribute('data-single-focus') === 'true';
+      document.body.setAttribute('data-single-focus', isSingle ? 'false' : 'true');
+      updateFocusBannerText();
+    }
+
+    function getBoxScript(box, persona, lang) {
+      var attr = 'data-step-' + persona + '-' + lang;
+      return box.getAttribute(attr) || box.getAttribute('data-step-candid-en') || '';
+    }
+
+    function updateAudioDurationTooltips() {
+      var boxes = getStepBoxes();
+      var totalCandidWords = 0;
+      var totalExecWords = 0;
+      for (var i = 0; i < boxes.length; i++) {
+        var cTxt = getBoxScript(boxes[i], 'candid', currentLang);
+        var eTxt = getBoxScript(boxes[i], 'exec', currentLang);
+        var cWords = cTxt.trim().split(/\s+/).length;
+        var eWords = eTxt.trim().split(/\s+/).length;
+        totalCandidWords += cWords;
+        totalExecWords += eWords;
+      }
+      var cSec = Math.round(totalCandidWords / 2.58 + boxes.length * 0.8);
+      var eSec = Math.round(totalExecWords / 2.58 + boxes.length * 0.8);
+      var cMin = Math.floor(cSec / 60) + 'm ' + (cSec % 60) + 's';
+      var eMin = Math.floor(eSec / 60) + 'm ' + (eSec % 60) + 's';
+      var btnC = document.getElementById('btnCandid');
+      var btnE = document.getElementById('btnExec');
+      if (btnC) {
+        btnC.textContent = (currentLang === 'he') ? ('☕ מדריך בגובה העיניים (~' + cMin + ')') : ('☕ Candid Guide (~' + cMin + ')');
+        btnC.title = 'Full Audio Guide (' + boxes.length + ' sections): ~' + cMin;
+      }
+      if (btnE) {
+        btnE.textContent = (currentLang === 'he') ? ('🎯 תקציר מהיר (~' + eMin + ')') : ('🎯 Quick Pitch (~' + eMin + ')');
+        btnE.title = 'Quick Pitch Audio (' + boxes.length + ' sections): ~' + eMin;
+      }
+    }
+
+    function clearBoxHighlights() {
+      var boxes = getStepBoxes();
+      for (var i = 0; i < boxes.length; i++) {
+        boxes[i].classList.remove('box-speaking');
+      }
+    }
+
+    function toggleCaptions() {
+      captionsEnabled = !captionsEnabled;
+      var btn = document.getElementById('btnCcToggle');
+      var bar = document.getElementById('captionBar');
+      if (btn) {
+        btn.setAttribute('aria-pressed', captionsEnabled ? 'true' : 'false');
+        btn.textContent = (currentLang === 'he') ? (captionsEnabled ? '💬 כתוביות: פעיל' : '💬 כתוביות: כבוי') : (captionsEnabled ? '💬 CC: ON' : '💬 CC: OFF');
+      }
+      if (bar) {
+        if (captionsEnabled || isNarrating) bar.classList.add('visible');
+        else bar.classList.remove('visible');
+      }
+    }
+
+    function stopAudio() {
+      isNarrating = false;
+      if (sentenceTimer) { clearInterval(sentenceTimer); sentenceTimer = null; }
+      if (keepAliveTimer) { clearInterval(keepAliveTimer); keepAliveTimer = null; }
+      if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+      clearBoxHighlights();
+      document.getElementById('btnCandid').setAttribute('aria-pressed', 'false');
+      document.getElementById('btnExec').setAttribute('aria-pressed', 'false');
+      updateAudioDurationTooltips();
+      if (!captionsEnabled) {
+        document.getElementById('captionBar').classList.remove('visible');
+      }
+    }
+
+    function speakCurrentBox() {
+      var boxes = getStepBoxes();
+      if (activeBoxIdx < 0 || activeBoxIdx >= boxes.length) {
+        stopAudio();
+        return;
+      }
+      setActiveStep(activeBoxIdx, false);
+      clearBoxHighlights();
+      var box = boxes[activeBoxIdx];
+      box.classList.add('box-speaking');
+      box.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+      var script = getBoxScript(box, currentPersona, currentLang);
+      var sentences = script.match(/[^.!?]+[.!?]+/g) || [script];
+      var sIdx = 0;
+      var bar = document.getElementById('captionBar');
+      var badge = document.getElementById('captionStepBadge');
+      var sentEl = document.getElementById('captionSentence');
+      if (bar) bar.classList.add('visible');
+
+      function renderSentence(i) {
+        var clamped = Math.min(i, sentences.length - 1);
+        if (badge) {
+          badge.textContent = (currentLang === 'he' ? 'שלב ' : 'Step ') + (activeBoxIdx + 1) + ' / ' + boxes.length + ' • ' + (box.getAttribute('data-step-title') || '');
+        }
+        if (sentEl) {
+          sentEl.textContent = sentences[clamped].trim() + ' (' + (clamped + 1) + '/' + sentences.length + ')';
+        }
+      }
+      renderSentence(0);
+
+      if (sentenceTimer) clearInterval(sentenceTimer);
+      if (keepAliveTimer) clearInterval(keepAliveTimer);
+
+      if (!('speechSynthesis' in window)) return;
+      window.speechSynthesis.cancel();
+      var allVoices = window.speechSynthesis.getVoices ? window.speechSynthesis.getVoices() : [];
+      var heVoice = null;
+      if (currentLang === 'he' && allVoices && allVoices.length) {
+        for (var vi = 0; vi < allVoices.length; vi++) {
+          if (/^he/i.test(allVoices[vi].lang || '')) {
+            heVoice = allVoices[vi];
+            break;
+          }
+        }
+      }
+      var spokenText = (currentLang === 'he' && !heVoice) ? getBoxScript(box, currentPersona, 'en') : script;
+      var u = new SpeechSynthesisUtterance(spokenText);
+      if (heVoice) {
+        u.lang = 'he-IL';
+        u.voice = heVoice;
+      } else {
+        u.lang = 'en-US';
+        var v = window.pickStandardSpeechVoice_ ? window.pickStandardSpeechVoice_() : null;
+        if (v) u.voice = v;
+      }
+      u.rate = 0.99;
+      u.pitch = 1.0;
+
+      var estMs = Math.max(4000, Math.round((script.split(/\s+/).length / 2.5) * 1000));
+      var stepMs = Math.max(2000, Math.round(estMs / sentences.length));
+      sentenceTimer = setInterval(function() {
+        if (sIdx + 1 < sentences.length) {
+          sIdx += 1;
+          renderSentence(sIdx);
+        }
+      }, stepMs);
+
+      keepAliveTimer = setInterval(function() {
+        if (window.speechSynthesis.speaking && !window.speechSynthesis.paused) {
+          window.speechSynthesis.pause();
+          window.speechSynthesis.resume();
+        }
+      }, 10000);
+
+      u.onend = function() {
+        if (sentenceTimer) clearInterval(sentenceTimer);
+        if (keepAliveTimer) clearInterval(keepAliveTimer);
+        if (!isNarrating) return;
+        if (singleBoxMode) {
+          stopAudio();
+          return;
+        }
+        if (activeBoxIdx + 1 < boxes.length) {
+          activeBoxIdx += 1;
+          setTimeout(speakCurrentBox, 450);
+        } else {
+          stopAudio();
+        }
+      };
+      window._activeUtterance = u;
+      window.speechSynthesis.speak(u);
+    }
+
+    function startFullTour(persona) {
+      if (isNarrating && currentPersona === persona && !singleBoxMode) {
+        stopAudio();
+        return;
+      }
+      currentPersona = persona;
+      singleBoxMode = false;
+      isNarrating = true;
+      activeBoxIdx = 0;
+      document.getElementById('btnCandid').setAttribute('aria-pressed', persona === 'candid' ? 'true' : 'false');
+      document.getElementById('btnExec').setAttribute('aria-pressed', persona === 'exec' ? 'true' : 'false');
+      speakCurrentBox();
+    }
+
+    function playSingleBox(idx) {
+      singleBoxMode = true;
+      isNarrating = true;
+      activeBoxIdx = idx;
+      speakCurrentBox();
+    }
+
+    function stepAudio(delta) {
+      var boxes = getStepBoxes();
+      activeBoxIdx = Math.max(0, Math.min(boxes.length - 1, activeBoxIdx + delta));
+      isNarrating = true;
+      singleBoxMode = false;
+      speakCurrentBox();
+    }
+
+    function copyGroundedPrompt() {
+      var ta = document.getElementById('sharedPromptTextarea');
+      var btn = document.getElementById('copyPromptBtn');
+      if (!ta) return;
+      ta.focus();
+      ta.select();
+      try { document.execCommand('copy'); } catch (e) {}
+      if (btn) {
+        btn.textContent = (currentLang === 'he') ? '✅ הועתק! הטקסט מסומן כעת להדבקה' : '✅ Copied! Text is highlighted to paste';
+      }
+    }
+
+    var GFORM_VIEW_URL = '#feedback/viewform';
+    var commLastActiveEl = null;
+
+    function openCommunityFormModal(prefillTopic) {
+      var modal = document.getElementById('communityFormModal');
+      if (!modal) return;
+      commLastActiveEl = document.activeElement;
+      modal.classList.add('open');
+      var statusEl = document.getElementById('commFormStatusMsg');
+      if (statusEl) { statusEl.style.display = 'none'; statusEl.textContent = ''; }
+      var topicEl = document.getElementById('commTopicInput');
+      if (topicEl && typeof prefillTopic === 'string' && prefillTopic.trim()) {
+        topicEl.value = prefillTopic.trim();
+        autoBiDiInput(topicEl);
+      }
+      var closeBtn = document.getElementById('commFormCloseBtn');
+      if (topicEl) topicEl.focus();
+      else if (closeBtn) closeBtn.focus();
+    }
+
+    function closeCommunityFormModal() {
+      var modal = document.getElementById('communityFormModal');
+      if (modal) modal.classList.remove('open');
+      if (commLastActiveEl && typeof commLastActiveEl.focus === 'function') {
+        commLastActiveEl.focus();
+        commLastActiveEl = null;
+      } else {
+        var fallbackBtn = document.getElementById('openCommFormHeaderBtn');
+        if (fallbackBtn) fallbackBtn.focus();
+      }
+    }
+
+    function submitCommunityPreFilledForm() {
+      var typeVal = (document.getElementById('commTypeSelect') || {}).value || '';
+      var topicVal = String((document.getElementById('commTopicInput') || {}).value || '').trim();
+      var detailsVal = String((document.getElementById('commDetailsInput') || {}).value || '').trim();
+      var emailVal = String((document.getElementById('commEmailInput') || {}).value || '').trim();
+      var statusEl = document.getElementById('commFormStatusMsg');
+      if (!topicVal || !detailsVal) {
+        if (statusEl) {
+          statusEl.style.color = 'var(--danger-text)';
+          statusEl.textContent = (currentLang === 'he')
+            ? 'נא למלא את שם המוצר/הנושא ואת פירוט השאלה או הניסיון לפני ההמשך.'
+            : 'Please fill in both the Product/Topic and Details fields before continuing.';
+          statusEl.style.display = 'block';
+        }
+        return;
+      }
+      var qs = '?usp=pp_url' +
+        '&entry.1714760330=' + encodeURIComponent(typeVal) +
+        '&entry.1427854373=' + encodeURIComponent(topicVal) +
+        '&entry.1440124874=' + encodeURIComponent(detailsVal);
+      if (emailVal) {
+        qs += '&entry.979916173=' + encodeURIComponent(emailVal);
+      }
+      window.open(GFORM_VIEW_URL + qs, '_blank', 'noopener');
+      if (statusEl) {
+        statusEl.style.color = 'var(--success-text)';
+        statusEl.textContent = (currentLang === 'he')
+          ? '✅ הטופס נפתח בלשונית חדשה עם כל הפרטים שמילאתם. לחצו שם על שליחה (Submit) לסיום.'
+          : '✅ Opened your pre-filled טופס משוב in a new tab. Click Submit there to finish.';
+        statusEl.style.display = 'block';
+      }
+    }
+
+    function toggleEmbeddedGForm() {
+      var wrap = document.getElementById('commEmbeddedWrap');
+      var iframe = document.getElementById('commEmbeddedIframe');
+      var btn = document.getElementById('toggleEmbedFormBtn');
+      if (!wrap || !iframe) return;
+      var willShow = !wrap.classList.contains('visible');
+      if (willShow) {
+        if (!iframe.getAttribute('src')) {
+          iframe.setAttribute('src', GFORM_VIEW_URL + '?embedded=true');
+        }
+        wrap.classList.add('visible');
+      } else {
+        wrap.classList.remove('visible');
+      }
+      if (btn) {
+        btn.setAttribute('aria-pressed', willShow ? 'true' : 'false');
+      }
+    }
+
+    document.addEventListener('click', function(ev) {
+      var commModal = document.getElementById('communityFormModal');
+      if (commModal && commModal.classList.contains('open') && ev.target === commModal) {
+        closeCommunityFormModal();
+      }
+    });
+
+    window.setLanguage = function(lang) {
+      currentLang = (lang === 'he') ? 'he' : 'en';
+      document.documentElement.lang = currentLang;
+      document.documentElement.dir = (currentLang === 'he') ? 'rtl' : 'ltr';
+      document.getElementById('langBtnEn').setAttribute('aria-pressed', currentLang === 'en' ? 'true' : 'false');
+      document.getElementById('langBtnHe').setAttribute('aria-pressed', currentLang === 'he' ? 'true' : 'false');
+
+      var nodes = document.querySelectorAll('[data-en][data-he]');
+      for (var i = 0; i < nodes.length; i++) {
+        var val = nodes[i].getAttribute(currentLang === 'he' ? 'data-he' : 'data-en') || '';
+        if (val.indexOf('<br>') !== -1 || val.indexOf('<strong>') !== -1 || val.indexOf('<b>') !== -1) {
+          nodes[i].innerHTML = val;
+        } else {
+          nodes[i].textContent = val;
+        }
+      }
+      var pdfHref = (currentLang === 'he') ? 'water_scale_guide_he.pdf' : 'water_scale_guide_en.pdf';
+      var pdfDl = (currentLang === 'he') ? 'Israel_Home_Water_Scale_Guide_HE.pdf' : 'Israel_Home_Water_Scale_Guide_EN.pdf';
+      var pdfBtn1 = document.getElementById('pdfDownloadBtn');
+      var pdfBtn2 = document.getElementById('pdfDownloadBtnSec4');
+      if (pdfBtn1) { pdfBtn1.href = pdfHref; pdfBtn1.setAttribute('download', pdfDl); }
+      if (pdfBtn2) { pdfBtn2.href = pdfHref; pdfBtn2.setAttribute('download', pdfDl); }
+      var inputs = document.querySelectorAll('[data-placeholder-en][data-placeholder-he]');
+      for (var j = 0; j < inputs.length; j++) {
+        inputs[j].placeholder = inputs[j].getAttribute(currentLang === 'he' ? 'data-placeholder-he' : 'data-placeholder-en');
+        if (inputs[j].id !== 'commEmailInput') autoBiDiInput(inputs[j]);
+      }
+      var chipsGroup = document.getElementById('conciergeChips');
+      if (chipsGroup) {
+        chipsGroup.dir = (currentLang === 'he') ? 'rtl' : 'ltr';
+      }
+      try { localStorage.setItem('eladb_water_scale_guide_lang', currentLang); } catch (e) {}
+      updateCalculator();
+      updateAudioDurationTooltips();
+      updateFocusBannerText();
+    };
+    window.setLang = window.setLanguage;
+
+    function setTheme(theme) {
+      var t = (theme === 'light') ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+      document.getElementById('themeBtnLight').setAttribute('aria-pressed', t === 'light' ? 'true' : 'false');
+      document.getElementById('themeBtnDark').setAttribute('aria-pressed', t === 'dark' ? 'true' : 'false');
+      try { localStorage.setItem('water_guide_vault_theme_v1', t); } catch (e) {}
+    }
+
+    document.addEventListener('keydown', function(e) {
+      var commModal = document.getElementById('communityFormModal');
+      if (commModal && commModal.classList.contains('open')) {
+        if (e.key === 'Escape') {
+          e.preventDefault();
+          closeCommunityFormModal();
+          return;
+        }
+        if (e.key === 'Tab') {
+          var focusables = commModal.querySelectorAll('button, [href], input, select, textarea, iframe, [tabindex]:not([tabindex="-1"])');
+          var visibleFocusables = [];
+          for (var fi = 0; fi < focusables.length; fi++) {
+            if (focusables[fi].offsetParent !== null) visibleFocusables.push(focusables[fi]);
+          }
+          if (visibleFocusables.length > 0) {
+            var firstEl = visibleFocusables[0];
+            var lastEl = visibleFocusables[visibleFocusables.length - 1];
+            if (e.shiftKey && document.activeElement === firstEl) {
+              lastEl.focus();
+              e.preventDefault();
+            } else if (!e.shiftKey && document.activeElement === lastEl) {
+              firstEl.focus();
+              e.preventDefault();
+            }
+          }
+        }
+        return;
+      }
+      if (e.target && /input|textarea|select/i.test(e.target.tagName)) return;
+      if (e.key === 'd' || e.key === 'D') {
+        var cur = document.documentElement.getAttribute('data-theme');
+        setTheme(cur === 'dark' ? 'light' : 'dark');
+      } else if (e.key === 'l' || e.key === 'L') {
+        setLanguage(currentLang === 'en' ? 'he' : 'en');
+      } else if (e.key === 'c' || e.key === 'C') {
+        toggleCaptions();
+      } else if (e.key === 'g' || e.key === 'G') {
+        toggleFocusMode();
+      } else if (e.key === 'ArrowRight') {
+        stepView(currentLang === 'he' ? -1 : 1);
+      } else if (e.key === 'ArrowLeft') {
+        stepView(currentLang === 'he' ? 1 : -1);
+      }
+    });
+
+    (function init() {
+      var params = new URLSearchParams(window.location.search);
+      var qTheme = params.get('theme');
+      var savedTheme = null;
+      try { savedTheme = localStorage.getItem('water_guide_vault_theme_v1'); } catch (e) {}
+      if (qTheme === 'light' || qTheme === 'day' || (!qTheme && savedTheme === 'light')) {
+        setTheme('light');
+      } else {
+        setTheme('dark');
+      }
+      var qLang = params.get('lang');
+      var savedLang = null;
+      try { savedLang = localStorage.getItem('eladb_water_scale_guide_lang'); } catch (e) {}
+      if (qLang === 'he' || (!qLang && savedLang === 'he')) {
+        setLanguage('he');
+      } else {
+        setLanguage('en');
+      }
+      setActiveStep(0, false);
+      if (params.get('ask') === '1' || params.get('form') === '1') {
+        setTimeout(function() { openCommunityFormModal(params.get('topic') || ''); }, 60);
+      }
+      if ('speechSynthesis' in window && window.speechSynthesis.onvoiceschanged !== undefined) {
+        window.speechSynthesis.onvoiceschanged = updateAudioDurationTooltips;
+      }
+    })();
+  </script>
+
+  
+<!-- ELADB_STEALTH_TELEMETRY_START -->
+<style>
+#vaultStealthTelemetryModal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  background: rgba(15, 23, 42, 0.72);
+  backdrop-filter: blur(4px);
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  font-family: 'Google Sans', Roboto, system-ui, sans-serif;
+}
+#vaultStealthTelemetryModal.open {
+  display: flex;
+}
+.est-dialog {
+  background: var(--surface, var(--card, #ffffff));
+  color: var(--text, var(--fg, #0f172a));
+  border: 1px solid rgba(148, 163, 184, 0.35);
+  border-radius: 16px;
+  width: 100%;
+  max-width: 860px;
+  max-height: 86vh;
+  overflow-y: auto;
+  padding: 22px 24px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+}
+.est-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.25);
+  padding-bottom: 12px;
+  margin-bottom: 14px;
+}
+.est-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.est-kpi-card {
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: rgba(29, 78, 216, 0.06);
+  border: 1px solid rgba(29, 78, 216, 0.2);
+}
+.est-kpi-val {
+  font-size: 24px;
+  font-weight: 800;
+  color: #1d4ed8;
+}
+[data-theme="dark"] .est-kpi-val {
+  color: #60a5fa;
+}
+.est-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  margin-top: 8px;
+}
+.est-table th, .est-table td {
+  text-align: start;
+  padding-block: 8px;
+  padding-inline: 10px;
+  border-block-end: 1px solid rgba(148, 163, 184, 0.2);
+}
+.est-close-btn {
+  min-width: 44px;
+  min-height: 44px;
+  padding: 6px 14px;
+  border-radius: 10px;
+  border: 1px solid rgba(148, 163, 184, 0.4);
+  background: transparent;
+  color: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+</style>
+<div id="vaultStealthTelemetryModal" role="dialog" aria-modal="true" aria-labelledby="estModalTitle">
+  <div class="est-dialog">
+    <div class="est-header">
+      <div>
+        <h2 id="estModalTitle" style="margin:0;font-size:18px;">📊 Reach, Button Clicks &amp; Stealth Behavioral Signals (water_scale_guide)</h2>
+        <div style="font-size:12px;opacity:0.8;margin-top:4px;">🔒 Stealth Creator-Only View (100% Anonymous • Max 1 Count per Unique User • Zero LDAPs Logged • Open via key <code>S</code> or <code>?stats=1</code>)</div>
+      </div>
+      <button type="button" class="est-close-btn" id="estCloseBtn" aria-label="Close telemetry modal">✕ Close</button>
+    </div>
+    <div class="est-kpi-grid">
+      <div class="est-kpi-card">
+        <div style="font-size:12px;font-weight:600;opacity:0.8;">Unique Visitors</div>
+        <div class="est-kpi-val" id="estUniqueVisitors">1</div>
+        <div style="font-size:11px;opacity:0.75;" id="estSyncStatus">Syncing...</div>
+      </div>
+      <div class="est-kpi-card">
+        <div style="font-size:12px;font-weight:600;opacity:0.8;">Total Views + Retro go/</div>
+        <div class="est-kpi-val" id="estTotalViews">1</div>
+        <div style="font-size:11px;opacity:0.75;">Historical go/il-water-guide: 1 clicks</div>
+      </div>
+      <div class="est-kpi-card">
+        <div style="font-size:12px;font-weight:600;opacity:0.8;">Unique Button &amp; Signal Hits</div>
+        <div class="est-kpi-val" id="estTotalClicks">0</div>
+        <div style="font-size:11px;opacity:0.75;">Deduplicated (max 1 per user)</div>
+      </div>
+    </div>
+    <h3 style="margin:12px 0 6px;font-size:14px;">🖱️ Per-Button &amp; Stealth Signal Breakdown (Max 1 per Unique User)</h3>
+    <p style="margin:0 0 8px;font-size:12px;opacity:0.78;">Includes button clicks, active reading depth (15s+ / 60s+ / 180s+), audio tour listening (6s+ / 30s+), copy events, and entry source.</p>
+    <table class="est-table">
+      <thead><tr><th>Button / Behavioral Signal</th><th>Category / Section</th><th>Unique Users</th></tr></thead>
+      <tbody id="estButtonsTbody"><tr><td colspan="3">No clicks recorded yet.</td></tr></tbody>
+    </table>
+    <h3 style="margin:16px 0 6px;font-size:14px;">📑 Section / Slide Reach</h3>
+    <table class="est-table">
+      <thead><tr><th>Section / Slide</th><th>Unique Users</th></tr></thead>
+      <tbody id="estSlidesTbody"><tr><td colspan="2">Tracking active sections...</td></tr></tbody>
+    </table>
+  </div>
+</div>
+<script>
+(function() {
+  if (window.__eladbStealthTelemetryActive || document.getElementById('telemetryModal')) return;
+  window.__eladbStealthTelemetryActive = true;
+  var CFG = {"deck": "water_scale_guide", "endpoint": "https://script.google.com/a/macros/google.com/s/AKfycbwfMAxDaZ7rVFxZT7g89Va5atDrENl8cnFnuYu0aJBvjmBn9PuOY1FBzkJedOIishAJ/exec", "baseU": 1, "baseV": 1, "golinks": "go/il-water-guide"};
+  var STORAGE_KEY = 'eladb_telemetry_' + CFG.deck;
+  var MY_CLICKS_KEY = 'eladb_my_clicks_' + CFG.deck;
+  var UID_KEY = 'eladb_uid_global_v1';
+  var state = {
+    uniqueVisitors: CFG.baseU,
+    totalViews: CFG.baseV,
+    buttons: {},
+    slides: { section_1: CFG.baseU },
+    labels: {},
+    syncedMode: 'Retro goctl + Local'
+  };
+
+  function getUid() {
+    try {
+      var u = localStorage.getItem(UID_KEY);
+      if (!u) {
+        u = 'u_' + Math.random().toString(36).slice(2, 10) + '_' + Date.now().toString(36);
+        localStorage.setItem(UID_KEY, u);
+      }
+      return u;
+    } catch (e) { return 'u_anon'; }
+  }
+
+  function loadLocal() {
+    try {
+      var raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return;
+      var parsed = JSON.parse(raw);
+      if (parsed && typeof parsed === 'object') mergeSnapshot(parsed, 'Local + Retro Baseline');
+    } catch (e) {}
+  }
+
+  function saveLocal() {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({
+        uniqueVisitors: state.uniqueVisitors,
+        totalViews: state.totalViews,
+        buttons: state.buttons,
+        slides: state.slides,
+        labels: state.labels
+      }));
+    } catch (e) {}
+  }
+
+  function mergeSnapshot(inc, label) {
+    if (!inc || typeof inc !== 'object') return;
+    if (typeof inc.uniqueVisitors === 'number') state.uniqueVisitors = Math.max(state.uniqueVisitors, inc.uniqueVisitors);
+    if (typeof inc.totalViews === 'number') state.totalViews = Math.max(state.totalViews, inc.totalViews);
+    var btnSrc = inc.buttonUniqueUsers || inc.buttons;
+    if (btnSrc && typeof btnSrc === 'object') {
+      for (var bk in btnSrc) {
+        var rb = btnSrc[bk];
+        var nb = (rb && typeof rb === 'object') ? Number(rb.uniqueUsers || rb.clicks || 0) : Number(rb || 0);
+        if (!isNaN(nb)) state.buttons[bk] = Math.max(Number(state.buttons[bk] || 0), nb);
+      }
+    }
+    if (inc.slides && typeof inc.slides === 'object') {
+      for (var sk in inc.slides) {
+        var rs = inc.slides[sk];
+        var ns = (rs && typeof rs === 'object') ? Number(rs.uniqueUsers || rs.views || 0) : Number(rs || 0);
+        if (!isNaN(ns)) state.slides[sk] = Math.max(Number(state.slides[sk] || 0), ns);
+      }
+    }
+    if (inc.labels && typeof inc.labels === 'object') {
+      for (var lk in inc.labels) state.labels[lk] = inc.labels[lk];
+    }
+    if (label) state.syncedMode = label;
+    saveLocal();
+    renderModal();
+  }
+
+  var SIGNAL_LABELS_ = {
+    signal_engaged_15s: { label: '⏱️ Engaged Reading: 15s+ (Skimmed)', loc: 'Stealth Signal' },
+    signal_engaged_60s: { label: '⏱️ Engaged Reading: 60s+ (1m+ Read)', loc: 'Stealth Signal' },
+    signal_engaged_180s: { label: '⏱️ Engaged Reading: 180s+ (3m+ Deep Dive)', loc: 'Stealth Signal' },
+    signal_audio_started: { label: '🎧 Audio: Listened 6s+ (Started Tour)', loc: 'Audio Signal' },
+    signal_audio_30s: { label: '🎧 Audio: Listened 30s+ (Sustained Listener)', loc: 'Audio Signal' },
+    signal_src_direct_or_golink: { label: '🔗 Entry: Direct / go-link / Chat', loc: 'Entry Source' },
+    signal_src_web_hub: { label: '🔗 Entry: From Another Web Page Deck/Hub', loc: 'Entry Source' },
+    signal_src_direct_ref: { label: '🔗 Entry: From Direct Reference', loc: 'Entry Source' },
+    signal_device_desktop: { label: '💻 Device: Desktop Viewport', loc: 'Device' },
+    signal_device_mobile: { label: '📱 Device: Mobile Viewport', loc: 'Device' }
+  };
+
+  function renderModal() {
+    var uEl = document.getElementById('estUniqueVisitors');
+    var vEl = document.getElementById('estTotalViews');
+    var cEl = document.getElementById('estTotalClicks');
+    var sEl = document.getElementById('estSyncStatus');
+    if (uEl) uEl.textContent = String(state.uniqueVisitors);
+    if (vEl) vEl.textContent = String(Math.max(state.uniqueVisitors, state.totalViews));
+    if (sEl) sEl.textContent = state.syncedMode;
+    var totalC = 0;
+    var bRows = [];
+    for (var k in state.buttons) {
+      var cnt = Number(state.buttons[k] || 0);
+      totalC += cnt;
+      var meta = state.labels[k] || SIGNAL_LABELS_[k] || { label: k, loc: 'Page' };
+      bRows.push({ key: k, label: meta.label || k, loc: meta.loc || 'Page', count: cnt });
+    }
+    if (cEl) cEl.textContent = String(totalC);
+    bRows.sort(function(a, b) { return b.count - a.count; });
+    var bTbody = document.getElementById('estButtonsTbody');
+    if (bTbody && bRows.length) {
+      bTbody.innerHTML = bRows.map(function(r) {
+        return '<tr><td><strong>' + r.label.replace(/</g, '&lt;') + '</strong></td><td>' + r.loc.replace(/</g, '&lt;') + '</td><td><strong>' + r.count + '</strong></td></tr>';
+      }).join('');
+    }
+    var sTbody = document.getElementById('estSlidesTbody');
+    if (sTbody) {
+      var sKeys = Object.keys(state.slides);
+      if (sKeys.length) {
+        sTbody.innerHTML = sKeys.map(function(sk) {
+          return '<tr><td><strong>' + sk.replace(/</g, '&lt;') + '</strong></td><td><strong>' + Number(state.slides[sk] || 0) + '</strong></td></tr>';
+        }).join('');
+      }
+    }
+  }
+
+  var cbName = '__onEladbTelemetry_' + CFG.deck.replace(/[^a-zA-Z0-9_]/g, '_');
+  window[cbName] = function(payload) { mergeSnapshot(payload, 'Live Cross-User Synced'); };
+  window.addEventListener('message', function(ev) {
+    if (ev && ev.data && (ev.data.type === 'ELADB_DECK_TELEMETRY' || ev.data.type === 'MARINA_TELEMETRY')) {
+      mergeSnapshot(ev.data.payload, 'Live Cross-User Synced');
+    }
+  });
+
+  function sendEvent(evt, target) {
+    var qs = '?deck=' + encodeURIComponent(CFG.deck) +
+             '&event=' + encodeURIComponent(evt) +
+             '&action=' + encodeURIComponent(evt) +
+             '&target=' + encodeURIComponent(target) +
+             '&uid=' + encodeURIComponent(getUid()) +
+             '&base_u=' + encodeURIComponent(String(CFG.baseU)) +
+             '&base_v=' + encodeURIComponent(String(CFG.baseV));
+    try {
+      var s = document.createElement('script');
+      s.src = CFG.endpoint + qs + '&callback=' + cbName + '&_t=' + Date.now();
+      s.async = true;
+      document.body.appendChild(s);
+      setTimeout(function() { if (s && s.parentNode) s.parentNode.removeChild(s); }, 8000);
+    } catch (e) {}
+  }
+
+  function deriveControlMeta(el) {
+    var tid = el.getAttribute('data-track-id') || el.id || '';
+    var txt = (el.getAttribute('aria-label') || el.innerText || el.textContent || tid || 'control').trim().replace(/\s+/g, ' ').slice(0, 56);
+    var sec = el.closest('.slide, .step-card, .tab-panel, section, header, footer');
+    var loc = 'Page';
+    if (sec) {
+      loc = sec.getAttribute('data-step-title') || sec.id || sec.tagName.toLowerCase();
+    }
+    if (!tid) {
+      tid = (loc + '_' + txt).toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, '').slice(0, 48) || 'btn';
+    }
+    return { id: tid, label: txt || tid, loc: String(loc).slice(0, 32) };
+  }
+
+  var lastTriggerEl = null;
+  function openModal() {
+    var m = document.getElementById('vaultStealthTelemetryModal');
+    if (!m) return;
+    lastTriggerEl = document.activeElement;
+    renderModal();
+    m.classList.add('open');
+    var cBtn = document.getElementById('estCloseBtn');
+    if (cBtn) cBtn.focus();
+  }
+  function closeModal() {
+    var m = document.getElementById('vaultStealthTelemetryModal');
+    if (!m) return;
+    m.classList.remove('open');
+    if (lastTriggerEl && typeof lastTriggerEl.focus === 'function') lastTriggerEl.focus();
+  }
+  window.openEladbStealthTelemetryModal = openModal;
+
+  function hasClickedControl(id) {
+    try {
+      var raw = localStorage.getItem(MY_CLICKS_KEY);
+      var map = raw ? JSON.parse(raw) : {};
+      if (map[id]) return true;
+      map[id] = 1;
+      localStorage.setItem(MY_CLICKS_KEY, JSON.stringify(map));
+      return false;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  function recordSignalOrButton(id, label, loc) {
+    state.labels[id] = { label: label, loc: loc };
+    if (hasClickedControl(id)) return;
+    state.buttons[id] = Number(state.buttons[id] || 0) + 1;
+    saveLocal();
+    renderModal();
+    sendEvent('click', id);
+  }
+  window.__eladbRecordCustomSignal = recordSignalOrButton;
+
+  loadLocal();
+  try {
+    var sKey = 'eladb_viewed_' + CFG.deck;
+    if (sessionStorage.getItem(sKey) !== '1') {
+      sessionStorage.setItem(sKey, '1');
+      var hadUid = Boolean(localStorage.getItem(UID_KEY));
+      getUid();
+      if (!hadUid) state.uniqueVisitors += 1;
+      state.totalViews += 1;
+      saveLocal();
+    }
+  } catch (e) {}
+  renderModal();
+  sendEvent('view', 'page_load');
+
+  // Stealth Behavioral Signals (1 per unique user)
+  try {
+    var ref = String(document.referrer || '').toLowerCase();
+    if (ref.indexOf('x20web') !== -1) {
+      recordSignalOrButton('signal_src_web_hub', '🔗 Entry: From Another Web Page Deck/Hub', 'Entry Source');
+    } else if (ref.indexOf('docs.google') !== -1 || false) {
+      recordSignalOrButton('signal_src_direct_ref', '🔗 Entry: From Direct Reference', 'Entry Source');
+    } else {
+      recordSignalOrButton('signal_src_direct_or_golink', '🔗 Entry: Direct / go-link / Chat', 'Entry Source');
+    }
+    var isMob = window.innerWidth < 768;
+    recordSignalOrButton(
+      isMob ? 'signal_device_mobile' : 'signal_device_desktop',
+      isMob ? '📱 Device: Mobile Viewport' : '💻 Device: Desktop Viewport',
+      'Device'
+    );
+  } catch (e) {}
+
+  var activeSec = 0;
+  var engTimer = setInterval(function() {
+    if (document.visibilityState !== 'visible') return;
+    activeSec += 5;
+    if (activeSec >= 15) recordSignalOrButton('signal_engaged_15s', '⏱️ Engaged Reading: 15s+ (Skimmed)', 'Stealth Signal');
+    if (activeSec >= 60) recordSignalOrButton('signal_engaged_60s', '⏱️ Engaged Reading: 60s+ (1m+ Read)', 'Stealth Signal');
+    if (activeSec >= 180) {
+      recordSignalOrButton('signal_engaged_180s', '⏱️ Engaged Reading: 180s+ (3m+ Deep Dive)', 'Stealth Signal');
+      clearInterval(engTimer);
+    }
+  }, 5000);
+
+  document.addEventListener('copy', function(ev) {
+    var t = ev.target;
+    var sec = (t && t.closest) ? t.closest('.slide, .step-card, .tab-panel, section, article') : null;
+    var secName = sec ? (sec.getAttribute('data-step-title') || sec.id || 'Section') : 'Page';
+    var cleanId = 'signal_copy_' + String(secName).toLowerCase().replace(/[^a-z0-9]+/g, '_').slice(0, 28);
+    recordSignalOrButton(cleanId, '📋 Copied Text/Link from: ' + String(secName).slice(0, 36), 'Copy Intent');
+  });
+
+  var audioListenSec = 0;
+  setInterval(function() {
+    if (window.speechSynthesis && window.speechSynthesis.speaking) {
+      audioListenSec += 3;
+      if (audioListenSec >= 6) recordSignalOrButton('signal_audio_started', '🎧 Audio: Listened 6s+ (Started Tour)', 'Audio Signal');
+      if (audioListenSec >= 30) recordSignalOrButton('signal_audio_30s', '🎧 Audio: Listened 30s+ (Sustained Listener)', 'Audio Signal');
+    }
+  }, 3000);
+
+  document.addEventListener('click', function(ev) {
+    var closeBtn = document.getElementById('estCloseBtn');
+    var modalEl = document.getElementById('vaultStealthTelemetryModal');
+    if (ev.target === closeBtn || ev.target === modalEl) {
+      closeModal();
+      return;
+    }
+    var ctrl = ev.target && ev.target.closest ? ev.target.closest('button, a[href], [role="button"], [data-track-id]') : null;
+    if (!ctrl || (modalEl && modalEl.contains(ctrl))) return;
+    var meta = deriveControlMeta(ctrl);
+    recordSignalOrButton(meta.id, meta.label, meta.loc);
+  });
+
+  document.addEventListener('keydown', function(ev) {
+    var t = ev.target;
+    var inInput = t && (/^(INPUT|TEXTAREA|SELECT)$/i.test(t.tagName) || t.isContentEditable);
+    var modalEl = document.getElementById('vaultStealthTelemetryModal');
+    if (ev.key === 'Escape' && modalEl && modalEl.classList.contains('open')) {
+      closeModal();
+      return;
+    }
+    if (!inInput && !ev.ctrlKey && !ev.metaKey && !ev.altKey && (ev.key === 's' || ev.key === 'S')) {
+      ev.preventDefault();
+      if (modalEl && modalEl.classList.contains('open')) closeModal();
+      else openModal();
+    }
+  });
+
+  try {
+    var sp = new URLSearchParams(window.location.search);
+    if (sp.get('stats') === '1') setTimeout(openModal, 80);
+  } catch (e) {}
+})();
+</script>
+<!-- ELADB_STEALTH_TELEMETRY_END -->
+</body>
+</html>
