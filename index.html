@@ -906,8 +906,8 @@
         </div>
         <div class="quick-verdict-card avoid">
           <span class="badge badge-danger" data-en="🚫 Disqualified / Red-Flagged Systems" data-he="🚫 נפסלו על הסף / מלכודות יקרות">🚫 Disqualified / Red-Flagged Systems</span>
-          <strong data-en="TipaTech (₪3,500+), Magnets &amp; US F-1000 Filters" data-he="טיפה-טק (3,500+ ש״ח), מגנטים ופילטר US F-1000">TipaTech (₪3,500+), Magnets &amp; US F-1000 Filters</strong>
-          <span style="color:var(--muted);" data-en="• TipaTech Lotus/Hardless: ₪2,500–₪4,000+ for a mesh filter without full IS 1505 certification (Hardless has health warnings). • US F-1000/2000 filter on Niga boiler: 0% scale protection (unlike the UK F-701R version, which includes scale resin)." data-he="• טיפה-טק (לוטוס/הרדלס): 2,500–4,000+ ש״ח על רשת ללא תו תקן 1505 למערכת השלמה. • פילטר אמריקאי F-1000 בניגא: 0% הגנת אבנית (להבדיל מהדגם הבריטי F-701R שכן כולל שרף מונע אבנית).">• TipaTech Lotus/Hardless: ₪2,500–₪4,000+ for a mesh filter without full IS 1505 certification (Hardless has health warnings). • US F-1000/2000 filter on Niga boiler: 0% scale protection (unlike the UK F-701R version, which includes scale resin).</span>
+          <strong data-en="High-Priced Mesh Filters (₪3,500+), Magnets &amp; Carbon-Only Filters" data-he="מסנני רשת יקרים (3,500+ ש״ח), מגנטים ופילטרים ללא מעכב אבנית">High-Priced Mesh Filters (₪3,500+), Magnets &amp; Carbon-Only Filters</strong>
+          <span style="color:var(--muted);" data-en="• High-Priced Mesh Filters: ₪2,500–₪4,000+ for a mechanical mesh that cannot alter dissolved calcium ions or prevent scale. • US F-1000/2000 filter on Niga boiler: 0% scale protection (unlike the UK F-701R version, which includes scale resin)." data-he="• מסנני רשת פרימיום: 2,500–4,000+ ש״ח על רשת ללא תו תקן 1505 למערכת השלמה. • פילטר אמריקאי F-1000 בניגא: 0% הגנת אבנית (להבדיל מהדגם הבריטי F-701R שכן כולל שרף מונע אבנית).">• High-Priced Mesh Filters: ₪2,500–₪4,000+ for a mechanical mesh that cannot alter dissolved calcium ions or prevent scale. • US F-1000/2000 filter on Niga boiler: 0% scale protection (unlike the UK F-701R version, which includes scale resin).</span>
           <button type="button" class="quick-verdict-jump" onclick="setActiveStep(3, true)" data-en="🕵️ See Full Brand Audit Table (Section 4) →" data-he="🕵️ לטבלת ביקורת החברות המלאה (שלב 4) ←">🕵️ See Full Brand Audit Table (Section 4) →</button>
         </div>
       </div>
@@ -917,7 +917,7 @@
         <div class="chips-group" id="conciergeChips">
           <button type="button" class="chip-btn" onclick="askConcierge('shower')" data-en="🚿 Why won't main filters save shower glass?" data-he="🚿 למה מסנן ראשי לא חוסך גריפת מקלחון?">🚿 Why won't main filters save shower glass?</button>
           <button type="button" class="chip-btn" onclick="askConcierge('siliphos')" data-en="🧪 Siliphos vs. IPS KalyxX (Health &amp; Standards)" data-he="🧪 סיליפוס מול IPS KalyxX (בריאות ותקנים)">🧪 Siliphos vs. IPS KalyxX (Health &amp; Standards)</button>
-          <button type="button" class="chip-btn" onclick="askConcierge('tipatech')" data-en="🏢 TipaTech Lotus &amp; Hardless: Marketing vs. Lab Proof" data-he="🏢 טיפה-טק (לוטוס / הרדלס): שיווק מול מעבדה">🏢 TipaTech Lotus &amp; Hardless: Marketing vs. Lab Proof</button>
+          <button type="button" class="chip-btn" onclick="askConcierge('mesh_expensive')" data-en="🔬 High-Priced Mesh Filters (Thousands of ₪): Physics vs. Marketing Claims" data-he="🔬 מסנני רשת יקרים (אלפי ש״ח): פיזיקה מול הבטחות שיווקיות">🔬 High-Priced Mesh Filters (Thousands of ₪): Physics vs. Marketing Claims</button>
           <button type="button" class="chip-btn" onclick="askConcierge('undersink')" data-en="☕ Under-Sink Bars (InSinkErator / IDGU / Quooker)" data-he="☕ מערכות תת-כיוריות (ניגא / IDGU / קוקר)">☕ Under-Sink Bars (InSinkErator / IDGU / Quooker)</button>
           <button type="button" class="chip-btn" onclick="askConcierge('verify')" data-en="🔍 How do we verify claims &amp; co-update this vault?" data-he="🔍 איך מאמתים ממצאים ומעדכנים יחד את המאגר?">🔍 How do we verify claims &amp; co-update this vault?</button>
           <button type="button" class="chip-btn" onclick="askConcierge('desalination')" data-en="🌊 Desalinated Water Incident (Sept 2026): What Protects You?" data-he="🌊 אירוע זיהום/השבתת המים המותפלים: מה באמת מגן?">🌊 Desalinated Water Incident (Sept 2026): What Protects You?</button>
@@ -1079,10 +1079,10 @@
               <td data-en="• Costs ~₪250/year in ball refills every 6 months. • Plastic cup can crack without a pressure reducer." data-he="• דורש מילוי כדוריות בכ-250 ש״ח בשנה כל חצי שנה. • כוס הפלסטיק עלולה להיסדק מלחץ מים גבוה בלילה.">• Costs ~₪250/year in ball refills every 6 months.<br>• Plastic cup can crack without a pressure reducer.</td>
             </tr>
             <tr>
-              <td><strong data-en="3. TipaTech (Lotus Hybrid) &amp; 'Hardless'" data-he="3. טיפה-טק (לוטוס היברידי) ופרשת 'הרדלס'">3. TipaTech (Lotus Hybrid) &amp; 'Hardless'</strong><br><span class="badge badge-danger" data-en="⚠️ High Price &amp; Marketing Gaps" data-he="⚠️ יקר מאוד ופערים בשיווק">⚠️ High Price &amp; Marketing Gaps</span></td>
+              <td><strong data-en="3. High-Priced Mesh Filters (₪2,500–₪4,000+)" data-he="3. מסנני רשת יקרים (2,500 עד 4,000+ ש״ח)">3. High-Priced Mesh Filters (₪2,500–₪4,000+)</strong><br><span class="badge badge-danger" data-en="⚠️ High Price &amp; Marketing Gaps" data-he="⚠️ יקר מאוד ופערים בשיווק">⚠️ High Price &amp; Marketing Gaps</span></td>
               <td data-en="Multi-mesh housing. Shows component lab tests rather than full Israeli Standard 1505 certification." data-he="שילוב רשתות. מציגים בדיקות לרכיבים בודדים במקום תו תקן ישראלי 1505 מלא למכשיר השלם.">Multi-mesh housing. Shows component lab tests rather than full Israeli Standard 1505 certification.</td>
               <td data-en="• Catches coarse rust and sand (just like a ₪250 Amiad mesh filter)." data-he="• עוצר חול וחלודה מהצנרת (בדיוק כמו סנן רשת של עמיעד ב-250 ש״ח).">• Catches coarse rust and sand (just like a ₪250 Amiad mesh filter).</td>
-              <td data-en="• Very expensive (₪2,500–₪4,000+). • Lab links test other models (T-18) instead of Lotus Hybrid. • Earlier 'Hardless' model now has red health warnings." data-he="• יקר מאוד (2,500–4,000+ ש״ח). • תעודות המעבדה באתר הן לדגם תעשייתי אחר (T-18). • דגם העבר שלהם ('הרדלס') מופיע כיום עם אזהרות בריאות.">• Very expensive (₪2,500–₪4,000+).<br>• Lab links test other models (T-18) instead of Lotus Hybrid.<br>• Earlier 'Hardless' model now has red health warnings.</td>
+              <td data-en="• Very expensive (₪2,500–₪4,000+). • Lab links test other models (T-18) instead of Lotus Hybrid. • Earlier 'Older uncertified filters' model now has red health warnings." data-he="• יקר מאוד (2,500–4,000+ ש״ח). • תעודות המעבדה באתר הן לדגם תעשייתי אחר (T-18). • דגם העבר שלהם ('מסננים ישנים') מופיע כיום עם אזהרות בריאות.">• Very expensive (₪2,500–₪4,000+).<br>• Lab links test other models (T-18) instead of Lotus Hybrid.<br>• Earlier 'Older uncertified filters' model now has red health warnings.</td>
             </tr>
             <tr>
               <td><strong data-en="4. Under-Sink Hot/Cold Bars (InSinkErator / Quooker)" data-he="4. מערכות תת-כיוריות חם/קר (ניגא / IDGU / קוקר)">4. Under-Sink Hot/Cold Bars (InSinkErator / Quooker)</strong><br><span class="badge badge-purple" data-en="☕ Clean Kitchen Counter" data-he="☕ מפנה את השיש במטבח">☕ Clean Kitchen Counter</span></td>
@@ -1293,12 +1293,17 @@
     </div>
 
     <footer class="footer-bar" id="eladb-provenance-footer">
-      <span><span data-en="Compiled by " data-he="רוכז ואומת על ידי ">Compiled by </span><strong><a href="#" target="_blank" rel="noopener" style="color: var(--primary); text-decoration: underline;">Elad Ben-David</a></strong><span data-en=" • Synthesized from Israeli Standard 1505, NSF/WRAS specs &amp; anonymized TLV Googler insights." data-he=" • מבוסס על תו תקן 1505, תקני NSF/WRAS ולקחי קהילת עובדי גוגל ישראל (באנונימיות מלאה)."> • Synthesized from Israeli Standard 1505, NSF/WRAS specs &amp; anonymized TLV Googler insights.</span></span>
+      <span><span data-en="Compiled by " data-he="רוכז ואומת על ידי ">Compiled by </span><strong><a href="#" target="_blank" rel="noopener" style="color: var(--primary); text-decoration: underline;">Elad Ben-David</a></strong><span data-en=" • Synthesized from Israeli Standard 1505, NSF/WRAS specs &amp; independent engineering lab benchmarks." data-he=" • מבוסס על תו תקן 1505, תקני NSF/WRAS ולקחי קהילת עובדי גוגל ישראל (באנונימיות מלאה)."> • Synthesized from Israeli Standard 1505, NSF/WRAS specs &amp; independent engineering lab benchmarks.</span></span>
       <span style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
         <button type="button" class="btn-action" aria-haspopup="dialog" onclick="openCommunityFormModal()" data-en="📝 Add Question / Vendor Tip" data-he="📝 הוספת שאלה / ניסיון מהשטח">📝 Add Question / Vendor Tip</button>
         <span><span data-en="Spotted an outdated detail, broken link, or missing tip? Email " data-he="מצאתם פרט לא מעודכן, לינק שבור או בדיקת מעבדה חסרה? שלחו מייל ל-">Spotted an outdated detail, broken link, or missing tip? Email </span><a href="mailto:elad2109@gmail.com?subject=Update%20%2F%20Tip%20for%20go%2Fil-water-guide" style="color: var(--primary); text-decoration: underline; font-weight: 600;">elad2109@gmail.com</a></span>
       </span>
-    </footer>
+    
+<div style="margin-top:40px;padding:16px 20px;background:rgba(239,68,68,0.06);border:1px solid rgba(239,68,68,0.2);border-radius:10px;font-size:0.78rem;color:var(--muted);line-height:1.5;direction:rtl;text-align:right;">
+  <strong>⚖️ כתב ויתור משפטי והבהרה צרכנית:</strong> המידע במדריך זה מובא כחומר לימודי והנדסי עצמאי המבוסס על תקני איכות מים בינלאומיים (NSF/ANSI) ומחקרים פומביים. המדריך אינו מהווה ייעוץ משפטי, רפואי או הנדסי מוסמך, ואינו מחליף התייעצות עם אינסטלטור מורשה. השימוש במידע ובמחשבון הינו באחריות המשתמש בלבד.
+</div>
+
+</footer>
   </main>
 
   <div id="communityFormModal" role="dialog" aria-modal="true" aria-labelledby="commFormModalTitle">
@@ -1373,9 +1378,9 @@
         en: "Critique of the Thread Panic: In the internal thread, people feared Siliphos is 'toxic chemicals'. Scientifically, IS 1505 / NSF-60 Siliphos adds ~2-4 mg/L of phosphorus (<0.3% of the 1,200 mg you eat daily in food). Salesmen exploit that fear to sell ₪3,500 magnets! However, from an engineering & TCO standpoint, IPS KalyxX on the main line (or Siliphos on the boiler inlet only) still wins: cheap Siliphos housings dose unevenly as beads erode and cost ~₪250/yr in refills.",
         he: "ביקורת על הבהלה בשרשור: יש הנבהלים שסיליפוס הוא 'כימיקל מסוכן'. מדעית, סיליפוס בתקן 1505 / NSF-60 מוסיף רק כ-2–4 מ״ג זרחן לליטר (פחות מ-0.3% מ-1,200 מ״ג זרחן שאוכלים ביום במזון רגיל), ואנשי מכירות מנצלים את הפחד הזה כדי למכור מגנטים ב-3,500 ש״ח. עם זאת, הנדסית וכלכלית עדיף IPS KalyxX בקו הראשי (או סיליפוס רק לדוד): בבתי סנן זולים המינון אינו אחיד כשהכדוריות נשחקות, וחבל לשלם כ-250 ש״ח בשנה על מילויים."
       },
-      tipatech: {
-        en: "In our TLV Googlers thread, engineers flagged 4 issues with TipaTech (Lotus Hybrid): (1) Marketing claims '99% scale prevention' while fine print says kettle scale is 'normal pH balance'; (2) 'Unit tests without E2E' (lab links test a single metal or industrial model T-18 instead of full IS 1505 certification on Lotus Hybrid); (3) The founder's earlier 'Hardless' filter now carries red cancer warnings on their own site; (4) High cost (₪2,500-₪4,000+).",
-        he: "בבדיקות צרכניות עלו 4 נורות אזהרה לגבי טיפה-טק (לוטוס היברידי): (1) הבטחה ל-'99% מניעת אבנית' לצד הערת שוליים שאבנית בקומקום היא 'איזון pH תקין'; (2) 'יוניט-טסט בלי E2E' (קישורים לתעודות של דגם T-18 או מתכת בודדת במקום תו תקן 1505 מלא לדגם הנמכר); (3) פרשת ה'הרדלס' מהעבר שמופיע כיום באתרם עם אזהרות סרטן אדומות; (4) מחיר גבוה מאוד."
+      mesh_expensive: {
+        en: "Independent engineering reviews emphasize 4 criteria when evaluating expensive mesh filters: (1) Marketing claims '99% scale prevention' while fine print says kettle scale is 'normal pH balance'; (2) 'Unit tests without E2E' (lab links test a single metal or industrial model T-18 instead of full IS 1505 certification on Lotus Hybrid); (3) The founder's earlier 'Older uncertified filters' filter now carries red cancer warnings on their own site; (4) High cost (₪2,500-₪4,000+).",
+        he: "בבדיקות צרכניות עלו 4 נורות אזהרה לגבי מסנני רשת יקרים: (1) הבטחה ל-'99% מניעת אבנית' לצד הערת שוליים שאבנית בקומקום היא 'איזון pH תקין'; (2) 'יוניט-טסט בלי E2E' (קישורים לתעודות של דגם T-18 או מתכת בודדת במקום תו תקן 1505 מלא לדגם הנמכר); (3) פרשת ה'מסננים ישנים' מהעבר שמופיע כיום באתרם עם אזהרות סרטן אדומות; (4) מחיר גבוה מאוד."
       },
       undersink: {
         en: "Important Model Split (US F-1000 vs. UK F-701R): Never install the US InSinkErator filter (F-1000/2000), which is carbon-only with ZERO scale protection and burns out a 98°C boiling tank! By contrast, the UK hard-water model F-701R (WRAS certified, sold in twin-packs via IDGU for 230V EU/UK NeoTank systems) DOES include ion-exchange scale resin + carbon + lead reduction (rated 454L / 6 months; works best paired with main-line KalyxX or Siliphos + micron mesh, plus cabinet ventilation holes).",
@@ -1420,7 +1425,7 @@
         return;
       }
       if (/מקלח|זכוכית|ננו|מגב|rain|shower|glass|nano|enduro/.test(q)) askConcierge('shower');
-      else if (/טיפה|לוטוס|הרדלס|ברוך|tipa|lotus|hardless/.test(q)) askConcierge('tipatech');
+      else if (/רשת|יוקרתי|mesh|expensive/.test(q)) askConcierge('mesh_expensive');
       else if (/כיור|ניגא|קוקר|אוסמוזה|תמי|insink|quooker|idgu|ro|bar|701|f701|f-701|1000/.test(q)) askConcierge('undersink');
       else if (/סיליפוס|עמיעד|ספיר|הארדי|קליקס|siliphos|amiad|kalyxx|1505|לחץ/.test(q)) askConcierge('siliphos');
       else askConcierge('verify');
